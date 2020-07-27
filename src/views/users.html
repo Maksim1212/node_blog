@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="/src/views/assets/users.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+
+    <title>UsersData</title>
+</head>
+
+<body>
+
+    <div class="container" id="app">
+        <td>
+            <!-- Create user-->
+            <!-- Modal Trigger -->
+            <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Add New user</a>
+        </td>
+        <p class="infoMess">{{dataMessage}}</p>
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+                <form @submit.prevent="addUser()">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input placeholder="email" v-model="email" name="email" type="email">
+                            <input placeholder="user Full Name" v-model="fullName" name="fullName" type="text">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="modal-close waves-effect waves-green btn-flat" style="background-color: #26a69a;">Cancel</a>
+                        <input class="modal-close waves-effect waves-green btn-flat" type="submit" value="Create" style="background-color: #26a69a;">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="modal2" class="modal">
+            <div class="modal-content">
+                <form @submit.prevent="updateUser()">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="hidden" placeholder="userId" v-model="userId" name="id">
+                            <input placeholder="fullName" v-model="fullName" name="fullName">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="modal-close waves-effect waves-green btn-flat" v-on:click="fullName = ''; userId = ''" style="background-color: #26a69a;">Cancel</a>
+                        <input class="modal-close waves-effect waves-green btn-flat" type="submit" value="update" style="background-color: #26a69a;">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="modal3" class="modal">
+            <div class="modal-content">
+                <form @submit.prevent="deleteUser()">
+                    <p>
+                        User {{fullName}} will be deleted, you confirm this action ?
+                    </p>
+
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="hidden" placeholder="userId" name="id" v-model="userId">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="modal-close waves-effect waves-green btn-flat" style="background-color: #26a69a;" v-on:click="fullName = ''; userId = ''">Сancel</a>
+                        <input class="modal-close waves-effect waves-green btn-flat" style="background-color: #26a69a;" type="submit" value="delete">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>ID</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(user,index) in users" :key="`userComponentKey + ${index}`">
+                        <td>{{ index + 1 }}</td>
+                        <td>{{user.fullName}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user._id}}</td>
+                        <td>
+                            <!-- UPDATE user-->
+                            <!-- Modal Trigger -->
+                            <a class="waves-effect waves-light btn modal-trigger" v-on:click="userId += user._id;fullName += user.fullName" href="#modal2">update</a>
+                        </td>
+                        <td>
+                            <!-- Delete user-->
+                            <!-- Modal Trigger -->
+                            <a class="waves-effect waves-light btn modal-trigger" v-on:click="userId += user._id; fullName += user.fullName" href="#modal3">delete</a>
+                        </td>
+
+
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.modal').modal();
+        });
+    </script>
+    <script type="module" src="/src/views/scripts/users.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</body>
+
+</html>

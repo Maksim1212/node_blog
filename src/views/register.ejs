@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/src/views/assets/pages.css">
+    <link href='https://fonts.googleapis.com/css?family=Qwigley' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+    <title>Register</title>
+</head>
+
+<body>
+    <div class="background">
+        <div class="logo">
+            <!-- <img src="images/logo.svg"> -->
+        </div>
+        <div class="welcome">
+            Welcome!
+        </div>
+        <div class="register-message">
+            please, register to see the weather.
+        </div>
+
+        <form method="POST" action="/v1/auth/createUser">
+            <div class="name-logo"></div>
+            <input type="text" name="fullName" class="name" placeholder="Name">
+
+            <div class="email-logo">
+                <!-- <img src="images/email.svg" class="email-logo"> -->
+            </div>
+            <input type="email" name="email" class="email" placeholder="Email">
+
+
+            <div>
+                <div class="password-logo">
+                    <!-- <img src="images/key.svg" class="password-logo"> -->
+                </div>
+                <input type="password" name="password" class="password" id="passInput" placeholder="Password">
+                <div class="password-logo2"> <img src="/src/views//images/view-pass.svg" onclick="showPass()"></div>
+            </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <div>
+                <input type="submit" value="Register" class="login">
+            </div>
+
+            <div class="register-errors">
+                <% if (typeof errors !== 'undefined') { %>
+                    <div style="text-align: center;color: rgb(238, 6, 6);">
+                        <% errors.forEach(error => { %>
+                            <%= error.message %>
+                                <% }) %>
+                    </div>
+                    <% } %>
+            </div>
+        </form>
+
+    </div>
+    <script src="/src/views/scripts/showPass.js"></script>
+</body>
+
+</html>
