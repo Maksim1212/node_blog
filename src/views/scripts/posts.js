@@ -9,33 +9,34 @@ new Vue({
         return {
             userComponentKey: 1,
             counter: 0,
-            email: '',
-            fullName: '',
-            userId: '',
+            body: '',
+            title: '',
+            postId: '',
             index: '',
-            emails: [],
-            fullNames: [],
+            titles: [],
+            bodies: [],
             resData: [],
-            users: [],
+            posts: [],
             dataMessage: '',
         };
     },
     methods: {
         async findAll() {
-            const res = await axios.get('/v1/users/data', {});
+            const res = await axios.get('/posts/data', {});
+
             for (let i = 0; i <= res.data.length; i += 1) {
-                this.emails.push(res.data[i].email);
-                this.fullNames.push(res.data[i].fullName);
-                this.users.push(res.data[i]);
+                this.titles.push(res.data[i].title);
+                this.bodies.push(res.data[i].body);
+                this.posts.push(res.data[i]);
             }
         },
-        async addUser() {
-            const res = await axios.post('/v1/users/', { email: `${this.email}`, fullName: `${this.fullName}` });
+        async addPost() {
+            const res = await axios.post('/posts/', { body: `${this.body}`, title: `${this.title}` });
             if (res.status === 200) {
                 this.dataMessage = 'user added successfully';
-                this.users = [];
-                this.fullName = '';
-                this.email = '';
+                this.posts = [];
+                this.title = '';
+                this.body = '';
                 this.findAll();
             } else if (res.status === 202) {
                 this.dataMessage = res.data.message;
@@ -44,24 +45,24 @@ new Vue({
             }
 
         },
-        async updateUser() {
-            const res = await axios.post('/v1/users?_method=PUT', { id: `${this.userId}`, fullName: `${this.fullName}` });
+        async updatePost() {
+            const res = await axios.post('/posts?_method=PUT', { id: `${this.postId}`, title: `${this.title}`, body: `${this.body}` });
             if (res.status === 200) {
-                this.users = [];
-                this.fullName = '';
-                this.userId = '';
+                this.posts = [];
+                this.title = '';
+                this.postId = '';
                 this.findAll();
             } else if (res.status === 202) {
                 this.dataMessage = res.data.message;
             } else { this.dataMessage = res.data.message[0].message; }
         },
-        async deleteUser() {
-            const res = await axios.post('/v1/users?_method=DELETE', { id: `${this.userId}` });
+        async deletePost() {
+            const res = await axios.post('/posts?_method=DELETE', { id: `${this.postId}` });
             if (res.status === 200) {
-                this.users = [];
+                this.posts = [];
                 this.findAll();
-                this.userId = '';
-                this.fullName = '';
+                this.postId = '';
+                this.title = '';
                 this.dataMessage = res.data.message;
             } else if (res.status === 202) {
                 this.dataMessage = res.data.message;
@@ -71,11 +72,12 @@ new Vue({
         },
     },
     async mounted() {
-        const res = await axios.get('/v1/users/data', {});
+        const res = await axios.get('/posts/data', {});
+
         for (let i = 0; i <= res.data.length; i += 1) {
-            this.emails.push(res.data[i].email);
-            this.fullNames.push(res.data[i].fullName);
-            this.users.push(res.data[i]);
+            this.titles.push(res.data[i].title);
+            this.bodies.push(res.data[i].body);
+            this.posts.push(res.data[i]);
         }
         this.$forceUpdate();
     },

@@ -16,18 +16,18 @@
 
     <div class="container" id="app">
         <td>
-            <!-- Create user-->
+            <!-- Create post-->
             <!-- Modal Trigger -->
-            <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Add New user</a>
+            <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Add New post</a>
         </td>
         <p class="infoMess">{{dataMessage}}</p>
         <div id="modal1" class="modal">
             <div class="modal-content">
-                <form @submit.prevent="addUser()">
+                <form @submit.prevent="addPost()">
                     <div class="row">
                         <div class="input-field col s6">
-                            <input placeholder="email" v-model="email" name="email" type="email">
-                            <input placeholder="user Full Name" v-model="fullName" name="fullName" type="text">
+                            <input placeholder="title" v-model="title" name="title" type="text">
+                            <input placeholder="body" v-model="body" name="body" type="text">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -40,15 +40,16 @@
 
         <div id="modal2" class="modal">
             <div class="modal-content">
-                <form @submit.prevent="updateUser()">
+                <form @submit.prevent="updatePost()">
                     <div class="row">
                         <div class="input-field col s6">
-                            <input type="hidden" placeholder="userId" v-model="userId" name="id">
-                            <input placeholder="fullName" v-model="fullName" name="fullName">
+                            <input type="hidden" placeholder="postId" v-model="postId" name="id">
+                            <input placeholder="title" v-model="title" name="title">
+                            <input placeholder="body" v-model="body" name="body">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <a class="modal-close waves-effect waves-green btn-flat" v-on:click="fullName = ''; userId = ''" style="background-color: #26a69a;">Cancel</a>
+                        <a class="modal-close waves-effect waves-green btn-flat" v-on:click="title = ''; postId = ''" style="background-color: #26a69a;">Cancel</a>
                         <input class="modal-close waves-effect waves-green btn-flat" type="submit" value="update" style="background-color: #26a69a;">
                     </div>
                 </form>
@@ -57,18 +58,18 @@
 
         <div id="modal3" class="modal">
             <div class="modal-content">
-                <form @submit.prevent="deleteUser()">
+                <form @submit.prevent="deletePost()">
                     <p>
-                        User {{fullName}} will be deleted, you confirm this action ?
+                        Post {{title}} will be deleted, you confirm this action ?
                     </p>
 
                     <div class="row">
                         <div class="input-field col s6">
-                            <input type="hidden" placeholder="userId" name="id" v-model="userId">
+                            <input type="hidden" placeholder="postId" name="id" v-model="postId">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <a class="modal-close waves-effect waves-green btn-flat" style="background-color: #26a69a;" v-on:click="fullName = ''; userId = ''">Сancel</a>
+                        <a class="modal-close waves-effect waves-green btn-flat" style="background-color: #26a69a;" v-on:click="title = ''; postId = ''">Сancel</a>
                         <input class="modal-close waves-effect waves-green btn-flat" style="background-color: #26a69a;" type="submit" value="delete">
                     </div>
                 </form>
@@ -81,28 +82,28 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Full Name</th>
-                        <th>Email</th>
+                        <th>Title</th>
+                        <th>Body</th>
                         <th>ID</th>
                         <th>Update</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(user,index) in users" :key="`userComponentKey + ${index}`">
+                    <tr v-for="(post,index) in posts" :key="`postComponentKey + ${index}`">
                         <td>{{ index + 1 }}</td>
-                        <td>{{user.fullName}}</td>
-                        <td>{{user.email}}</td>
-                        <td>{{user._id}}</td>
+                        <td>{{post.title}}</td>
+                        <td>{{post.body}}</td>
+                        <td>{{post._id}}</td>
                         <td>
-                            <!-- UPDATE user-->
+                            <!-- UPDATE post-->
                             <!-- Modal Trigger -->
-                            <a class="waves-effect waves-light btn modal-trigger" v-on:click="userId += user._id;fullName += user.fullName" href="#modal2">update</a>
+                            <a class="waves-effect waves-light btn modal-trigger" v-on:click="postId += post._id;title += post.title;body += post.body" href="#modal2">update</a>
                         </td>
                         <td>
-                            <!-- Delete user-->
+                            <!-- Delete post-->
                             <!-- Modal Trigger -->
-                            <a class="waves-effect waves-light btn modal-trigger" v-on:click="userId += user._id; fullName += user.fullName" href="#modal3">delete</a>
+                            <a class="waves-effect waves-light btn modal-trigger" v-on:click="postId += post._id; title += post.title" href="#modal3">delete</a>
                         </td>
 
 
@@ -120,7 +121,7 @@
             $('.modal').modal();
         });
     </script>
-    <script type="module" src="/src/views/scripts/users.js"></script>
+    <script type="module" src="/src/views/scripts/posts.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </body>
 

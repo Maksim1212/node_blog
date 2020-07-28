@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const UserRouter = require('../components/User/router');
 const AuthUserRouter = require('../components/Auth/router');
+const PostRouter = require('../components/Post/router');
 
 module.exports = {
     /**
@@ -33,7 +34,7 @@ module.exports = {
          */
         app.use('/v1/auth', AuthUserRouter);
 
-
+        app.use('/posts', PostRouter);
 
         /**
          * @description No results returned mean the object is not found
