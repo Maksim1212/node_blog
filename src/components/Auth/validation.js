@@ -55,7 +55,6 @@ class AuthUserValidation extends Validation {
             .object({
                 email: this.Joi.string().email().required(),
                 password: this.Joi.string().required(),
-                _csrf: this.Joi.string(),
             })
             .validate(data);
     }

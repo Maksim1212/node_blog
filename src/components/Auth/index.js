@@ -125,18 +125,18 @@ async function login(req, res, next) {
 
         const user = await AuthUserService.findUser(req.body.email);
         if (!user) {
-            req.flash('error', { message: userNotFound });
-
-            res.status(401).redirect('/v1/auth/login/');
-            return res;
+            return res.status(401).json({
+                message: unregisterModule
+            });
         }
         if (!error && user) {
             const reqPassword = req.body.password;
             const userPassword = user.password;
             const passwordsMatch = await bcrypt.compare(reqPassword, userPassword);
             if (!passwordsMatch) {
-                req.flash('error', { message: wrongPassword });
-                return res.redirect('/v1/auth/login/');
+                return res.status(401).json({
+                    message: wrongPassword
+                });
             }
             const token = await getJWTTokens(user.id);
             let data = {};
@@ -144,22 +144,15 @@ async function login(req, res, next) {
                 ...getUserMainFields(user),
                 token,
             };
-            req.session.user = data;
-            return res.redirect('/weather/');
+            // req.session.user = data;
+            return res.status(200).json({
+                data
+            });
         }
-        return res.status(200);
     } catch (error) {
-        if (error instanceof ValidationError) {
-            req.flash('error', error.message);
-            return res.redirect('/v1/auth/login/');
-        }
-
-        if (error.name === 'MongoError') {
-            console.log(req.flash('error', { message: defaultError }));
-            return res.redirect('/v1/auth/login/');
-        }
-
-        return next(error);
+        return res.status(400).json({
+            message: error.message
+        });
     }
 }
 
