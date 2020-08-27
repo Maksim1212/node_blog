@@ -10,11 +10,9 @@ function findById(id) {
     return CommentModel.findById(id).exec();
 }
 
-
 function create(post) {
     return CommentModel.create(post);
 }
-
 
 module.exports = {
     findAll,

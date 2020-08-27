@@ -1,98 +1,23 @@
 const { Router } = require('express');
-const csrf = require('csurf');
 const AuthUserComponent = require('../Auth');
 const Auth = require('../../polices/isAuth');
 
-const csrfProtection = csrf({ cookie: true });
-
-/**
- * Express router to auth user related functions on.
- * @type {Express.Router}
- * @const
- */
 const authUserRouter = Router();
 
-/**
- * Route get user login page
- * @name /v1/auth/login
- * @function
- * @inner
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware.
- */
-authUserRouter.get('/login', csrfProtection, AuthUserComponent.loginPage);
+authUserRouter.get('/login', AuthUserComponent.loginPage);
 
-// authUserRouter.get('/weather', AuthUserComponent.weatherPage);
-// authUserRouter.post('/weather', AuthUserComponent.getWeather);
+authUserRouter.post('/login', AuthUserComponent.login);
 
-/**
- * Route post user login action
- * @name /v1/auth/login
- * @function
- * @inner
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware.
- */
-authUserRouter.post('/login', csrfProtection, AuthUserComponent.login);
-
-/**
- * Route get user logout action
- * @name /v1/auth/logout
- * @function
- * @inner
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware.
- */
 authUserRouter.get('/logout', AuthUserComponent.logout);
 
-/**
- * Route get not authorized user 401 page
- * @name /v1/auth/401
- * @function
- * @inner
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware.
- */
 authUserRouter.get('/401', AuthUserComponent.anauthorized);
 
-/**
- * Route get user forbidden page 403
- * @name /v1/auth/403
- * @function
- * @inner
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware.
- */
 authUserRouter.get('/403', AuthUserComponent.forbidden);
 
-/**
- * Route get user register page
- * @name /v1/auth/register
- * @function
- * @inner
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware.
- */
-authUserRouter.get('/register', csrfProtection, AuthUserComponent.register);
+authUserRouter.post('/createUser', AuthUserComponent.createUser);
 
-/**
- * Route post create new user
- * @name /v1/auth/createUser
- * @function
- * @inner
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware.
- */
-authUserRouter.post('/createUser', csrfProtection, AuthUserComponent.createUser);
-
-/**
- * Route post update user JWT token
- * @name /v1/auth/login
- * @function
- * @inner
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware.
- */
 authUserRouter.post('/updateToken', Auth.isAuthJWT);
+
+authUserRouter.post('/update', AuthUserComponent.updateUserPass);
 
 module.exports = authUserRouter;

@@ -12,6 +12,10 @@ function findUser(email) {
     return AuthUserModel.findOne({ email }).exec();
 }
 
+function updateUserPass(_id, password) {
+    return AuthUserModel.updateOne({ _id }, { password }).exec();
+}
+
 /**
  * Login user
  * @exports
@@ -97,4 +101,5 @@ module.exports = {
     logout,
     updateRefreshToken,
     getUserByRefreshToken,
+    updateUserPass,
 };

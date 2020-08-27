@@ -1,9 +1,6 @@
 const { Router } = require('express');
-const csrf = require('csurf');
 const PostComponent = require('../Post');
 const { isAuthJWT } = require('../../polices/isAuth');
-
-const csrfProtection = csrf({ cookie: true });
 
 /**
  * Express router to mount user related functions on.
@@ -21,7 +18,6 @@ const postRouter = Router();
  * @param {callback} middleware - Express middleware.
  */
 postRouter.get('/', PostComponent.findAll);
-// userRouter.get('/', isAuthJWT, csrfProtection, UserComponent.findAll);
 
 /**
  * Route serving a user
@@ -31,7 +27,7 @@ postRouter.get('/', PostComponent.findAll);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware.
  */
-postRouter.get('/:id', csrfProtection, PostComponent.findById);
+postRouter.get('/:id', PostComponent.findById);
 
 /**
  * Route serving a new user
@@ -41,7 +37,7 @@ postRouter.get('/:id', csrfProtection, PostComponent.findById);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-// userRouter.post('/', isAuthJWT, csrfProtection, UserComponent.create);
+
 postRouter.post('/create', PostComponent.create);
 /**
  * Route serving a new user

@@ -22,9 +22,25 @@ class AuthUserValidation extends Validation {
                     .min(5)
                     .max(18)
                     .required(),
-                _csrf: this.Joi.string(),
             })
             .validate(profile);
+    }
+    updateUserPass(data) {
+        return this.Joi
+            .object({
+                password: this.Joi
+                    .string()
+                    .min(5)
+                    .max(18)
+                    .required(),
+                newPassword: this.Joi
+                    .string()
+                    .min(5)
+                    .max(18)
+                    .required(),
+                email: this.Joi.string().email().required(),
+            })
+            .validate(data);
     }
 
     /**
