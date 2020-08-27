@@ -18,6 +18,13 @@ class PostValidation extends Validation {
             })
             .validate(data);
     }
+    findByUserId(data) {
+        return this.Joi
+            .object({
+                id: this.Joi.objectId(),
+            })
+            .validate(data);
+    }
 
     /**
      * @param {String} profile.email

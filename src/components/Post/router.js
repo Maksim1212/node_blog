@@ -29,6 +29,7 @@ postRouter.get('/', PostComponent.findAll);
  */
 postRouter.get('/:id', PostComponent.findById);
 
+postRouter.get('/user/:id', PostComponent.findByUserId);
 /**
  * Route serving a new user
  * @name /v1/users

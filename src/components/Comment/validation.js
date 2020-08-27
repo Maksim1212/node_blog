@@ -23,6 +23,11 @@ class CommentValidation extends Validation {
                     .min(15)
                     .max(35)
                     .required(),
+                post_id: this.Joi
+                    .string()
+                    .min(15)
+                    .max(35)
+                    .required(),
                 body: this.Joi
                     .string()
                     .min(1)
@@ -31,8 +36,6 @@ class CommentValidation extends Validation {
             })
             .validate(comment);
     }
-
-
 }
 
 module.exports = new CommentValidation();

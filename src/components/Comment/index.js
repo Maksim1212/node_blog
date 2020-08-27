@@ -67,7 +67,6 @@ async function create(req, res, next) {
         });
     } catch (error) {
         if (error instanceof ValidationError) {
-            req.flash('error', error.message);
             return res.status(201).json({
                 message: req.flash('error', error.message.data),
             });

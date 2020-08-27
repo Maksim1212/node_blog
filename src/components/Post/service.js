@@ -22,6 +22,10 @@ function findById(id) {
     return PostModel.findById(id).exec();
 }
 
+function findByUserId(author_id) {
+    return PostModel.find({ author_id }).exec();
+}
+
 /**
  * @exports
  * @method create
@@ -63,4 +67,5 @@ module.exports = {
     create,
     updateById,
     deleteById,
+    findByUserId,
 };

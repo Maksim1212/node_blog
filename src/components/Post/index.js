@@ -27,6 +27,7 @@ async function findAll(req, res, next) {
  */
 async function findById(req, res, next) {
     try {
+        console.log(req.params.id)
         const { error } = PostValidation.findById(req.params);
 
         if (error) {
@@ -39,9 +40,36 @@ async function findById(req, res, next) {
         return res.status(200).json({
             post
         });
-        // render('post.html', {
-        //     errors: req.flash('error'),
-        //)};
+    } catch (error) {
+        if (error instanceof ValidationError) {
+            return res.status(422).json({
+                error: error.name,
+                details: error.message,
+            });
+        }
+
+        res.status(500).json({
+            message: error.name,
+            details: error.message,
+        });
+
+        return next(error);
+    }
+}
+
+async function findByUserId(req, res, next) {
+    try {
+        const { error } = PostValidation.findByUserId(req.params);
+
+        if (error) {
+            throw new ValidationError(error.details);
+        }
+
+        const posts = await PostService.findByUserId(req.params.id);
+
+        return res.status(200).json({
+            posts
+        });
     } catch (error) {
         if (error instanceof ValidationError) {
             return res.status(422).json({
@@ -174,4 +202,5 @@ module.exports = {
     create,
     updateById,
     deleteById,
+    findByUserId,
 };

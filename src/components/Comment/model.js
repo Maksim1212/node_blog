@@ -13,6 +13,10 @@ const CommentSchema = new Schema({
     likes: {
         type: Array,
     },
+    post_id: {
+        type: String,
+        required: true,
+    },
     creation_time: {
         type: Date,
         required: true,
