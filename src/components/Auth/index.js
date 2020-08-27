@@ -115,24 +115,6 @@ async function updateUserPass(req, res, next) {
  * @param {express.NextFunction} next
  * @returns {Promise<void>}
  */
-function loginPage(req, res, next) {
-    try {
-        return res.status(200).render('login.ejs', {
-            errors: req.flash('error'),
-        });
-    } catch (error) {
-        req.flash('error', { message: defaultError });
-        return next(error);
-    }
-}
-
-/**
- * @function
- * @param {express.Request} req
- * @param {express.Response} res
- * @param {express.NextFunction} next
- * @returns {Promise<void>}
- */
 async function login(req, res, next) {
     try {
         const { error } = AuthUserValidation.login(req.body);
@@ -219,10 +201,8 @@ function forbidden(req, res) {
     return res.render('403.ejs');
 }
 
-
 module.exports = {
     createUser,
-    loginPage,
     logout,
     login,
     getJWTTokens,

@@ -4,8 +4,6 @@ const Auth = require('../../polices/isAuth');
 
 const authUserRouter = Router();
 
-authUserRouter.get('/login', AuthUserComponent.loginPage);
-
 authUserRouter.post('/login', AuthUserComponent.login);
 
 authUserRouter.get('/logout', AuthUserComponent.logout);
