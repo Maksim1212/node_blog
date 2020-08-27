@@ -40,7 +40,8 @@
         "passport-local": "1.0.0",
         "request": "^2.88.2",
         "supertest": "4.0.2",
-        "uuid": "^8.2.0"
+        "uuid": "^8.2.0",
+        "vue-router": "^3.3.4"
     },
     "devDependencies": {
         "cz-conventional-changelog": "3.1.0",

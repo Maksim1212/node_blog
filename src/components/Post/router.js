@@ -20,10 +20,9 @@ const postRouter = Router();
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware.
  */
-postRouter.get('/', PostComponent.postsPageRender);
+postRouter.get('/', PostComponent.findAll);
 // userRouter.get('/', isAuthJWT, csrfProtection, UserComponent.findAll);
 
-postRouter.get('/data', PostComponent.findAll);
 /**
  * Route serving a user
  * @name /v1/users/:id
@@ -43,7 +42,7 @@ postRouter.get('/:id', csrfProtection, PostComponent.findById);
  * @param {callback} middleware - Express middleware
  */
 // userRouter.post('/', isAuthJWT, csrfProtection, UserComponent.create);
-postRouter.post('/', PostComponent.create);
+postRouter.post('/create', PostComponent.create);
 /**
  * Route serving a new user
  * @name /v1/users

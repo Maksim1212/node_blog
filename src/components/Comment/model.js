@@ -1,22 +1,14 @@
 const { Schema } = require('mongoose');
 const connections = require('../../config/connection');
 
-const PostSchema = new Schema({
+const CommentSchema = new Schema({
     author_id: {
         type: String,
         required: true,
     },
-    title: {
-        type: String,
-        trim: true,
-    },
     body: {
         type: String,
         required: true,
-    },
-    comment: {
-        type: String,
-        trim: true,
     },
     likes: {
         type: Array,
@@ -28,8 +20,8 @@ const PostSchema = new Schema({
     },
 
 }, {
-    collection: 'postmodel',
+    collection: 'commentmodel',
     versionKey: false,
 }, );
 
-module.exports = connections.model('PostModel', PostSchema);
+module.exports = connections.model('CommentModel', CommentSchema);

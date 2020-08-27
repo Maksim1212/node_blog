@@ -1,8 +1,8 @@
 const express = require('express');
 const http = require('http');
-const UserRouter = require('../components/User/router');
 const AuthUserRouter = require('../components/Auth/router');
 const PostRouter = require('../components/Post/router');
+const CommentRouter = require('../components/Comment/router');
 
 module.exports = {
     /**
@@ -15,16 +15,6 @@ module.exports = {
         const router = express.Router();
 
         /**
-         * Forwards any requests to the /v1/users URI to UserRouter.
-         * @name /v1/users
-         * @function
-         * @inner
-         * @param {string} path - Express path
-         * @param {callback} middleware - Express middleware.
-         */
-        app.use('/v1/users', UserRouter);
-
-        /**
          * Forwards any requests to the /v1/auth URI to AuthUserRouter.
          * @name /v1/users
          * @function
@@ -35,6 +25,8 @@ module.exports = {
         app.use('/v1/auth', AuthUserRouter);
 
         app.use('/posts', PostRouter);
+
+        app.use('/comments', CommentRouter);
 
         /**
          * @description No results returned mean the object is not found

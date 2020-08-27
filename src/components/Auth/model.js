@@ -2,7 +2,7 @@ const { Schema } = require('mongoose');
 const connections = require('../../config/connection');
 
 const UserSchema = new Schema({
-    fullName: {
+    name: {
         type: String,
         trim: true,
     },

@@ -28,6 +28,11 @@ class PostValidation extends Validation {
     create(post) {
         return this.Joi
             .object({
+                author_id: this.Joi
+                    .string()
+                    .min(15)
+                    .max(35)
+                    .required(),
                 title: this.Joi
                     .string()
                     .min(1)

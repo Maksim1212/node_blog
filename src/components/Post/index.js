@@ -4,29 +4,10 @@ const ValidationError = require('../../error/ValidationError');
 
 const dbError = 'MongoError: E11000 duplicate key error collection';
 const defaultError = 'An error has occurred';
-/**
- * @function
- * @param {express.Request} req
- * @param {express.Response} res
- * @param {express.NextFunction} next
- * @returns {Promise < void >}
- */
-
-async function postsPageRender(req, res, next) {
-    try {
-        return res.status(200).render('posts.html', {
-            errors: req.flash('error'),
-        });
-    } catch (error) {
-        req.flash('error', { message: defaultError });
-        return next(error);
-    }
-}
 
 async function findAll(req, res, next) {
     try {
         const posts = await PostService.findAll();
-
         return res.status(200).json(
             posts,
         );
@@ -51,11 +32,16 @@ async function findById(req, res, next) {
         if (error) {
             throw new ValidationError(error.details);
         }
+        console.log(req.params.id)
 
-        const user = await PostService.findById(req.params.id);
+        const post = await PostService.findById(req.params.id);
+        console.log(post)
         return res.status(200).json({
-            data: user,
+            post
         });
+        // render('post.html', {
+        //     errors: req.flash('error'),
+        //)};
     } catch (error) {
         if (error instanceof ValidationError) {
             return res.status(422).json({
@@ -91,7 +77,7 @@ async function create(req, res, next) {
         await PostService.create(req.body);
         console.log(req.body);
         return res.status(200).json({
-            message: 'user added successfully',
+            message: 'post added successfully',
         });
     } catch (error) {
         if (error instanceof ValidationError) {
@@ -183,7 +169,6 @@ async function deleteById(req, res, next) {
 }
 
 module.exports = {
-    postsPageRender,
     findAll,
     findById,
     create,

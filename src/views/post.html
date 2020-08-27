@@ -18,7 +18,7 @@
         <td>
             <!-- Create post-->
             <!-- Modal Trigger -->
-            <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Add New post</a>
+            <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Add Comment</a>
         </td>
         <p class="infoMess">{{dataMessage}}</p>
         <div id="modal1" class="modal">
@@ -88,15 +88,12 @@
                         <th>Creation Time</th>
                         <th>Update</th>
                         <th>Delete</th>
-                        <th>1</th>
-                        <th>2</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(post,index) in posts" :key="`postComponentKey + ${index}`">
                         <td>{{ index + 1 }}</td>
                         <td>
-                            <!-- <router-link :to="{ name: 'post', params: { id: index } }">{{post.title}}</router-link> -->
                             <a v-bind:href="`/posts/${post._id}`">
                                 {{post.title}}
                             </a>
@@ -114,12 +111,6 @@
                             <!-- Modal Trigger -->
                             <a class="waves-effect waves-light btn modal-trigger" v-on:click="postId += post._id; title += post.title" href="#modal3">delete</a>
                         </td>
-                        <td>
-                            <router-link to="/foo">Перейти к Foo</router-link>
-                        </td>
-                        <td>
-                            <router-link to="/bar">Перейти к Bar</router-link>
-                        </td>
 
 
                     </tr>
@@ -136,7 +127,7 @@
             $('.modal').modal();
         });
     </script>
-    <script type="module" src="/src/views/scripts/posts.js"></script>
+    <script type="module" src="/src/views/scripts/singlePost.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </body>
 

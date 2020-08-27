@@ -85,7 +85,6 @@ authUserRouter.get('/register', csrfProtection, AuthUserComponent.register);
  */
 authUserRouter.post('/createUser', csrfProtection, AuthUserComponent.createUser);
 
-authUserRouter.delete('/delete', csrfProtection, AuthUserComponent.deleteById);
 /**
  * Route post update user JWT token
  * @name /v1/auth/login

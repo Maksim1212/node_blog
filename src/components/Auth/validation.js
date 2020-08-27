@@ -3,7 +3,7 @@ const Validation = require('../validation');
 class AuthUserValidation extends Validation {
     /**
      * @param {String} profile.email
-     * @param {String} profile.fullName
+     * @param {String} profile.name
      * @param {String} profile.password
      * @returns
      * @memberof AuthUserValidation
@@ -11,7 +11,7 @@ class AuthUserValidation extends Validation {
     createUser(profile) {
         return this.Joi
             .object({
-                fullName: this.Joi
+                name: this.Joi
                     .string()
                     .min(1)
                     .max(30)

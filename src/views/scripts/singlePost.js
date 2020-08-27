@@ -1,26 +1,13 @@
 /* eslint-disable no-new */
 import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.esm.browser.js';
-import VueRouter from 'https://unpkg.com/vue-router/dist/vue-router.js';
+
 // Vue.config.errorHandler = function(err, vm, info) {
 //     console.log(`Error: ${err.toString()}\nInfo: ${info}`);
 // };
 
-const Foo = { template: '<div>foo</div>' }
-const Bar = { template: '<div>bar</div>' }
-
-const routes = [
-    { path: '/foo', component: Foo },
-    { path: '/bar', component: Bar }
-]
-
-const router = new VueRouter({
-    routes // сокращённая запись для `routes: routes`
-})
-
-
 new Vue({
+
     el: '#app',
-    router,
     data() {
         return {
             userComponentKey: 1,
@@ -90,7 +77,8 @@ new Vue({
         },
     },
     async mounted() {
-        const res = await axios.get('/posts/data', {});
+        const res = await axios.get('/posts/', {});
+        console.log(query);
         let creationDates = [];
         let creationTimes = [];
         // console.log(this.times);
@@ -110,8 +98,6 @@ new Vue({
 
 
             });
-            // console.log(this.posts);
-            // this.posts.data[i].creation_time = creationDates[i];
         }
         let timm = this.times.map(time => { return time })
         console.log(timm);

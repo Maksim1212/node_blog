@@ -93,16 +93,7 @@ function loginPage(req, res, next) {
     }
 }
 
-// function weatherPage(req, res, next) {
-//     try {
-//         return res.status(200).render('weather.ejs', {
-//             errors: req.flash('error'),
-//         });
-//     } catch (error) {
-//         req.flash('error', { message: defaultError });
-//         return next(error);
-//     }
-// }
+
 
 /**
  * @function
@@ -197,36 +188,6 @@ function forbidden(req, res) {
     return res.render('403.ejs');
 }
 
-/**
- * @function
- * @param {express.Request} req
- * @param {express.Response} res
- * @param {express.NextFunction} next
- * @returns {Promise<void>}
- */
-async function deleteById(req, res, next) {
-    try {
-        const { error } = AuthUserValidation.deleteById(req.body);
-
-        if (error) {
-            throw new ValidationError(error.details);
-        }
-
-        await AuthUserService.deleteById(req.body.id);
-
-        return res.status(200);
-    } catch (error) {
-        if (error instanceof ValidationError) {
-            req.flash('error', error.message);
-            return res.status(401);
-        }
-        if (error.name === 'MongoError') {
-            console.log(req.flash('error', { message: defaultError }));
-            return res.status(500);
-        }
-        return next(error);
-    }
-}
 
 module.exports = {
     register,
@@ -237,5 +198,4 @@ module.exports = {
     getJWTTokens,
     forbidden,
     anauthorized,
-    deleteById,
 };

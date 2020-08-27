@@ -88,17 +88,6 @@ function getUserByRefreshToken(refreshToken) {
     return AuthUserModel.findOne({ refreshToken }).exec();
 }
 
-/**
- * Delete user by id
- * @exports
- * @method deleteOne
- * @param {string} _id
- * @summary Delete user by id
- * @returns {Promise<void>}
- */
-function deleteUserById(_id) {
-    return AuthUserModel.deleteOne({ _id }).exec();
-}
 module.exports = {
     // register,
     createUser,
@@ -108,5 +97,4 @@ module.exports = {
     logout,
     updateRefreshToken,
     getUserByRefreshToken,
-    deleteUserById,
 };
