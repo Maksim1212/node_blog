@@ -15,6 +15,14 @@ class CommentValidation extends Validation {
             .validate(data);
     }
 
+    findByPostId(data) {
+        return this.Joi
+            .object({
+                id: this.Joi.objectId(),
+            })
+            .validate(data);
+    }
+
     create(comment) {
         return this.Joi
             .object({

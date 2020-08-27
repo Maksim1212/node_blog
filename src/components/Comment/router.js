@@ -8,7 +8,9 @@ const commentRouter = Router();
 commentRouter.get('/', CommentComponent.findAll);
 
 
-commentRouter.get('/:id', CommentComponent.findById);
+// commentRouter.get('/:id', CommentComponent.findById);
+
+commentRouter.get('/:id', CommentComponent.findByPostId)
 
 
 commentRouter.post('/create', CommentComponent.create);

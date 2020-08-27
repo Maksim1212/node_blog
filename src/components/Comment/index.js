@@ -18,39 +18,39 @@ async function findAll(req, res, next) {
     }
 }
 
-async function findById(req, res, next) {
-    try {
-        const { error } = PostValidation.findById(req.params);
+// async function findById(req, res, next) {
+//     try {
+//         const { error } = PostValidation.findById(req.params);
 
-        if (error) {
-            throw new ValidationError(error.details);
-        }
-        console.log(req.params.id)
+//         if (error) {
+//             throw new ValidationError(error.details);
+//         }
+//         console.log(req.params.id)
 
-        const post = await PostService.findById(req.params.id);
-        console.log(post)
-        return res.status(200).json({
-            post
-        });
-        // render('post.html', {
-        //     errors: req.flash('error'),
-        //)};
-    } catch (error) {
-        if (error instanceof ValidationError) {
-            return res.status(422).json({
-                error: error.name,
-                details: error.message,
-            });
-        }
+//         const post = await PostService.findById(req.params.id);
+//         console.log(post)
+//         return res.status(200).json({
+//             post
+//         });
+//         // render('post.html', {
+//         //     errors: req.flash('error'),
+//         //)};
+//     } catch (error) {
+//         if (error instanceof ValidationError) {
+//             return res.status(422).json({
+//                 error: error.name,
+//                 details: error.message,
+//             });
+//         }
 
-        res.status(500).json({
-            message: error.name,
-            details: error.message,
-        });
+//         res.status(500).json({
+//             message: error.name,
+//             details: error.message,
+//         });
 
-        return next(error);
-    }
-}
+//         return next(error);
+//     }
+// }
 
 async function create(req, res, next) {
     try {
@@ -80,8 +80,38 @@ async function create(req, res, next) {
     }
 }
 
+async function findByPostId(req, res, next) {
+    try {
+        const { error } = CommentValidation.findByPostId(req.params);
+
+        if (error) {
+            throw new ValidationError(error.details);
+        }
+
+        const comments = await CommentService.findByPostId(req.params.id);
+
+        return res.status(200).json({
+            comments
+        });
+    } catch (error) {
+        if (error instanceof ValidationError) {
+            return res.status(422).json({
+                error: error.name,
+                details: error.message,
+            });
+        }
+
+        res.status(500).json({
+            message: error.name,
+            details: error.message,
+        });
+
+        return next(error);
+    }
+}
 module.exports = {
     findAll,
-    findById,
+    // findById,
     create,
+    findByPostId,
 };
