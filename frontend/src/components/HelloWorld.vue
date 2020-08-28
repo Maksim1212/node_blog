@@ -5,28 +5,53 @@
       check out the
       <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
     </p>
-
+  <div>
+        <PostItem
+        v-for="post in POSTS"
+        :key="(Object.assign({}, ...post))._id"
+        :posts_data="post"
+    />
+  </div>
   </div>
 </template>
 
 <script>
+/* eslint-disable */
+
+import { mapActions, mapGetters } from 'vuex';
+import PostItem from './PostItem.vue';
 
 export default {
   name: 'HelloWorld',
   props: {
     msg: String,
   },
-  computed: {
-
+  methods: {
+    ...mapActions(['GET_POSTS_FROM_API']),
   },
-  mounted() {
+  computed: {
+    ...mapGetters(['POSTS']),
+  },
+  components: {
+    PostItem,
+  },
 
+  mounted() {
+    this.GET_POSTS_FROM_API();
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+#hello {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
 h3 {
   margin: 40px 0 0;
 }

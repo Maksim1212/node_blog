@@ -108,6 +108,37 @@ async function updateUserPass(req, res, next) {
     }
 }
 
+async function getUserFromID(req, res, next) {
+    try {
+        console.log(req.params.id)
+        const { error } = AuthUserValidation.findById(req.params);
+
+        if (error) {
+            throw new ValidationError(error.details);
+        }
+        console.log(req.params.id)
+
+        const user = await AuthUserService.getUserFromID(req.params.id);
+        const name = user.name;
+        return res.status(200).json({
+            name,
+        });
+    } catch (error) {
+        if (error instanceof ValidationError) {
+            return res.status(422).json({
+                message: error,
+            });
+        }
+
+        res.status(500).json({
+            message: error.name,
+            details: error.message,
+        });
+
+        return next(error);
+    }
+}
+
 /**
  * @function
  * @param {express.Request} req
@@ -203,4 +234,5 @@ module.exports = {
     forbidden,
     anauthorized,
     updateUserPass,
+    getUserFromID,
 };

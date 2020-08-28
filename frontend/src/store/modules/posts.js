@@ -12,11 +12,11 @@ export default {
     },
     actions: {
         GET_POSTS_FROM_API({ commit }) {
-            return axios('http://127.0.0.1:5000/api/v1/feeds', {
+            return axios('http://127.0.0.1:3000/posts', {
                     method: "GET"
                 })
                 .then((posts) => {
-                    commit('SET_NEWS_TO_STATE', posts.data);
+                    commit('SET_POSTS_TO_STATE', posts.data);
                     return posts;
                 })
                 .catch((error) => {

@@ -18,4 +18,6 @@ authUserRouter.post('/updateToken', Auth.isAuthJWT);
 
 authUserRouter.post('/update', AuthUserComponent.updateUserPass);
 
+authUserRouter.get('/user/:id', AuthUserComponent.getUserFromID);
+
 module.exports = authUserRouter;

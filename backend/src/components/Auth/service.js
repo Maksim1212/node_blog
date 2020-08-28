@@ -92,6 +92,10 @@ function getUserByRefreshToken(refreshToken) {
     return AuthUserModel.findOne({ refreshToken }).exec();
 }
 
+function getUserFromID(_id) {
+    return AuthUserModel.findById({ _id }).exec();
+}
+
 module.exports = {
     // register,
     createUser,
@@ -102,4 +106,5 @@ module.exports = {
     updateRefreshToken,
     getUserByRefreshToken,
     updateUserPass,
+    getUserFromID,
 };

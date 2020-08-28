@@ -71,5 +71,14 @@ class AuthUserValidation extends Validation {
                 refreshToken: this.Joi.string().required(),
             }).validate(data);
     }
+    findById(id) {
+        return this.Joi.object({
+            id: this.Joi
+                .string()
+                .min(10)
+                .max(35)
+                .required()
+        }).validate(id);
+    }
 }
 module.exports = new AuthUserValidation();
