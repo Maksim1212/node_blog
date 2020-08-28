@@ -50,6 +50,7 @@ postRouter.post('/create', PostComponent.create);
  */
 postRouter.put('/', PostComponent.updateById);
 
+postRouter.put('/like', PostComponent.addLike);
 /**
  * Route serving a new user
  * @name /v1/users

@@ -14,7 +14,22 @@ class CommentValidation extends Validation {
             })
             .validate(data);
     }
-
+    likedUserId(data) {
+        return this.Joi
+            .object({
+                user_id: this.Joi
+                    .string()
+                    .min(15)
+                    .max(28)
+                    .required(),
+                comment_id: this.Joi
+                    .string()
+                    .min(15)
+                    .max(28)
+                    .required(),
+            })
+            .validate(data);
+    }
     findByPostId(data) {
         return this.Joi
             .object({

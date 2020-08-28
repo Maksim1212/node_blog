@@ -101,9 +101,42 @@ async function findByPostId(req, res, next) {
             });
         }
 
-        res.status(500).json({
+        return res.status(500).json({
             message: error.name,
             details: error.message,
+        });
+    }
+}
+
+async function addLike(req, res, next) {
+    try {
+        const { error } = CommentValidation.likedUserId(req.body);
+
+        if (error) {
+            throw new ValidationError(error.details);
+        }
+        let commentData = await CommentService.findById(req.body.comment_id);
+        let likesArr = [];
+        likesArr.push(...commentData.likes);
+        let like = likesArr.find(id => id === `${req.body.user_id}`);
+        if (like === undefined) {
+            await CommentService.addLike(req.body.comment_id, req.body.user_id);
+            return res.status(200).json({
+                message: 'like added successfully'
+            });
+        }
+        return res.status(200).json({
+            message: 'you have already liked this comment'
+        })
+    } catch (error) {
+        if (error instanceof ValidationError) {
+            return res.status(422).json({
+                message: error.name,
+            });
+        }
+
+        res.status(500).json({
+            message: error.name,
         });
 
         return next(error);
@@ -114,4 +147,5 @@ module.exports = {
     // findById,
     create,
     findByPostId,
+    addLike,
 };

@@ -61,6 +61,10 @@ function deleteById(_id) {
     return PostModel.deleteOne({ _id }).exec();
 }
 
+function addLike(_id, user_id) {
+    return PostModel.updateOne({ _id }, { $push: { likes: user_id } }).exec()
+}
+
 module.exports = {
     findAll,
     findById,
@@ -68,4 +72,5 @@ module.exports = {
     updateById,
     deleteById,
     findByUserId,
+    addLike,
 };

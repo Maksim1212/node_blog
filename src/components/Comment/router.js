@@ -10,8 +10,9 @@ commentRouter.get('/', CommentComponent.findAll);
 
 // commentRouter.get('/:id', CommentComponent.findById);
 
-commentRouter.get('/:id', CommentComponent.findByPostId)
+commentRouter.get('/:id', CommentComponent.findByPostId);
 
+commentRouter.put('/like', CommentComponent.addLike);
 
 commentRouter.post('/create', CommentComponent.create);
 
