@@ -35,7 +35,9 @@ module.exports = {
          * @param {callback} middleware - Express middleware.
          */
         app.use((req, res) => {
-            res.status(404).render('404');
+            res.status(404).json({
+                message: 'page not found'
+            });
         });
 
         /**
