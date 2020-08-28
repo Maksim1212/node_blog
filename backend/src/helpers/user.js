@@ -1,9 +1,8 @@
 function getUserMainFields(user) {
-    const { fullName, email, _id } = user;
+    const { name, _id } = user;
     return {
         _id,
-        email,
-        fullName,
+        name,
     };
 }
 
