@@ -20,8 +20,8 @@ export default {
                     },
                 })
                 .then((user) => {
-                    ctx.commit('SET_USER_TO_STATE', user.data);
-                    return user;
+                    ctx.commit('SET_USER_TO_STATE', user);
+                    return user.data;
                 })
                 .catch((error) => {
                     console.log(error)

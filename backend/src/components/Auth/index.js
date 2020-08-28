@@ -139,10 +139,11 @@ async function login(req, res, next) {
                 });
             }
             const token = await getJWTTokens(user.id);
+            const accessToken = token.accessToken;
             let data = {};
             data = {
                 ...getUserMainFields(user),
-                token,
+                accessToken,
             };
             // req.session.user = data;
             return res.status(200).json({

@@ -40,6 +40,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import { mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 // import Head from '../components/Head';
@@ -53,19 +54,25 @@ export default {
   },
   methods: {
     ...mapActions(['LOGIN_USER']),
-    loginUser() {
+
+    async loginUser() {
       if (this.email.trim() && this.password.trim()) {
         const data = {
           email: this.email,
           password: this.password,
         };
-        this.LOGIN_USER(data);
-
-        this.$router.push('/news');
+        const result = await this.LOGIN_USER(data);
+        console.log(result);
+        localStorage.setItem('name', result.data.name);
+        localStorage.setItem('id', result.data._id);
+        localStorage.setItem('accessToken', result.data.accessToken);
+        this.$router.push('/');
       } else {
         console.log('Some error');
       }
     },
+  },
+  computed: {
   },
   components: {
     // Head
