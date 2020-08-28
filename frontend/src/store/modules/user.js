@@ -3,12 +3,16 @@ import axios from "axios"
 
 export default {
     state: {
-        user: []
+        user: [],
+        name: '',
     },
     mutations: {
         SET_USER_TO_STATE: (state, user) => {
             state.user = user;
-        }
+        },
+        SET_USER_NAME_TO_STATE: (state, name) => {
+            state.name = name;
+        },
     },
     actions: {
         LOGIN_USER(ctx, data) {
@@ -28,11 +32,27 @@ export default {
                     return error;
                 })
         },
+        FIND_USER(ctx, id) {
+            return axios(`http://127.0.0.1:3000/v1/auth/user/${id}`, {
+                    method: "GET",
+                })
+                .then((name) => {
+                    ctx.commit('SET_USER_NAME_TO_STATE', name.data.name);
+                    return name;
+                })
+                .catch((error) => {
+                    console.log(error)
+                    return error;
+                })
+        },
     },
     getters: {
         USER(state) {
             return state.user
-        }
+        },
+        NAME(state) {
+            return state.name
+        },
     },
 
 }

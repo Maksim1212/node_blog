@@ -1,6 +1,5 @@
 <template>
 <div>
-  <!-- <Head/> -->
 <div class="post">
     <!-- <div class="icons" v-if="checkUserId">
           <img class="postsActions" src="../assets/clear.svg" v-on:click="deleteItem">
@@ -25,7 +24,6 @@
 <script>
 /* eslint-disable */
 import { mapActions, mapGetters } from 'vuex';
-// import Head from '../components/Head'
 export default {
   name: 'Post',
   data() {
@@ -34,8 +32,8 @@ export default {
     };
   },
   methods: {
-    // ...mapActions(['GET_NEWS_ITEM_BY_ID_FROM_API', 'DELETE_NEWS_ITEM_BY_ID_FROM_API']),
     ...mapActions(['GET_POST_ITEM_BY_ID_FROM_API']),
+    ...mapActions(['FIND_USER']),
     deleteItem() {
       const data = {
         id: this.$route.params.id,
@@ -53,6 +51,10 @@ export default {
     getDate() {
       return this.POSTS.creation_time.split('T')[0];
     },
+    getName(){
+      this.FIND_USER(this.posts_data.author_id);
+      return this.NAME;
+    },
     // checkUserId() {
     //   const sessionUserId = localStorage.getItem('sessionUserId');
     //   if (sessionUserId === this.authorID) {
@@ -66,7 +68,7 @@ export default {
    // this.authorID = res.data.creator._id;
   },
   components: {
-    // Head
+
   },
 };
 </script>
