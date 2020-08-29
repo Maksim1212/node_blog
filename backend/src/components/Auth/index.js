@@ -80,7 +80,7 @@ async function updateUserPass(req, res, next) {
             const userPassword = updatingUser.password;
             const passwordsMatch = await bcrypt.compare(reqPassword, userPassword);
             if (!passwordsMatch) {
-                return res.json({
+                return res.status(401).json({
                     message: wrongPassword
                 });
             }
@@ -92,19 +92,9 @@ async function updateUserPass(req, res, next) {
         }
 
     } catch (error) {
-        if (error instanceof ValidationError) {
-            req.flash('error', error.message);
-            return res.status(500).json({
-                message: error.message[0].message
-            });
-        }
-        if (error.name === 'MongoError') {
-            req.flash('error', { message: dbError });
-            return res.status(500).json({
-                message: dbError
-            })
-        }
-        return next(error);
+        return res.status(422).json({
+            message: error.message,
+        });
     }
 }
 

@@ -1,13 +1,14 @@
 <template>
-    <div v-if = authUser>
+    <div>
 <!-- <Head/> -->
         <div class="about">
-            <form @submit.prevent="loginUser">
+            <form @submit.prevent="updatePass">
             <div class="">
               <br>
-                 <small
+              <div class="">
+                <small
                         v-if="!$v.email.required"
-                        class="">Enter login
+                        class="">Confirm Email
                 </small>
                 <input
 
@@ -15,6 +16,19 @@
                         class=""
                         v-model="email"
                         :class="{'is-invalid' : $v.email.$error}">
+            </div><br>
+                <input
+
+                        type="password"
+                        class=""
+                        autocomplete="off"
+                        v-model="newPassword"
+                        :class="{'is-invalid' : $v.newPassword.$error}"
+                >
+                <small
+                        v-if="!$v.newPassword.required"
+                        class="">Enter newPassword
+                </small>
             </div><br>
             <div class="">
                 <input
@@ -33,65 +47,56 @@
             <br>
             <button type="submit"
                     class=""
-                    :disabled="$v.$invalid">Login</button>
+                    :disabled="$v.$invalid">Confirm</button>
         </form>
         </div>
-       <p>
-         if you don't have account ,  <router-link to="/register">Register</router-link>
-       </p>
-    </div>
-    <div v-else>
-      <p>Account settings:
-        <router-link to="/update/password">Update Password</router-link>
-      </p>
     </div>
 </template>
 
 <script>
 /* eslint-disable */
-import { mapActions } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
+import axios from 'axios';
 
 export default {
   data() {
     return {
       email: '',
       password: '',
+      newPassword: '',
       isButtonDisable: true,
     };
   },
   methods: {
-    ...mapActions(['LOGIN_USER']),
-
-    async loginUser() {
-      if (this.email.trim() && this.password.trim()) {
+    async updatePass() {
+      try{if (this.email.trim() && this.password.trim() && this.newPassword.trim()) {
         const data = {
+          newPassword: this.newPassword,
           email: this.email,
           password: this.password,
         };
-        const result = await this.LOGIN_USER(data);
-        console.log(result);
-        localStorage.setItem('name', result.data.name);
-        localStorage.setItem('id', result.data._id);
-        localStorage.setItem('accessToken', result.data.accessToken);
-        this.$router.go('');
+        const result = await axios.post('http://127.0.0.1:3000/v1/auth/update', {
+        email: `${this.email}`, password: `${this.password}`,newPassword: `${this.newPassword}`});
+        localStorage.clear();
+        this.$router.push('/account');
       } else {
-        console.log('Some error');
+        throw error;
+      }}catch(error){
+        console.log(error);
+       alert('wrong email + password combination');
       }
     },
   },
   computed: {
-    authUser() {
-      if(localStorage.getItem('id')) {
-        return false;
-      } else return true;
-    }
   },
   validations: {
     email: {
       required,
     },
     password: {
+      required,
+    },
+    newPassword: {
       required,
     },
   },

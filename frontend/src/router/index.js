@@ -41,6 +41,12 @@ const routes = [{
         component: () =>
             import ('../components/Register.vue'),
     },
+    {
+        path: '/update/password',
+        name: 'Settings',
+        component: () =>
+            import ('../components/Settings.vue'),
+    },
 ];
 
 const router = new VueRouter({
