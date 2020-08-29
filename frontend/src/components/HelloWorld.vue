@@ -1,10 +1,17 @@
 <template>
   <div class="hello">
-    <p>
+      <div>
+    <div class="addArticle" v-if="sessionUser == true">
+        <router-link to="/create">Add Post</router-link>
+      </div>
+      <div v-else>
+      </div>
+  </div>
+    <!-- <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
       <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
+    </p> -->
   <div>
         <PostItem
         v-for="post in POSTS"
@@ -31,6 +38,11 @@ export default {
   },
   computed: {
     ...mapGetters(['POSTS']),
+    sessionUser(){
+      if(localStorage.getItem('name')) {
+        return true;
+      } else return false;
+    }
   },
   components: {
     PostItem,

@@ -109,13 +109,12 @@ async function create(req, res, next) {
         });
     } catch (error) {
         if (error instanceof ValidationError) {
-            req.flash('error', error.message);
-            return res.status(201).json({
-                message: req.flash('error', error.message.data),
+            return res.status(422).json({
+                message: error.message,
             });
         }
         if (error.name === 'MongoError') {
-            return res.status(202).json({
+            return res.status(422).json({
                 message: dbError,
             });
         }

@@ -1,14 +1,16 @@
 <template>
   <div class="PostItem">
       <h3>{{posts_data.title}}</h3>
-      <div class="icons" v-if="checkUserId">
+      <!-- <div class="icons" v-if="checkUserId">
      <router-link :to="{name: 'Edit', params: {id: posts_data._id}}">
           <img class="edit" src="../assets/pencil.svg">
       </router-link>
-      </div>
-      <div class="icons" v-else></div>
+      </div> -->
+      <!-- <div class="icons" v-else></div> -->
       <div>
-          <p class="dataInfo">{{getName}} | {{getDate}}</p>
+          <p class="dataInfo"> <router-link :to="{name: 'Read', params: {id: posts_data._id}}">
+             {{getName}}
+          </router-link> | {{getDate}}</p>
       <p>{{getContent}}
            <router-link :to="{name: 'Read', params: {id: posts_data._id}}">
               ...

@@ -17,6 +17,12 @@ const routes = [{
             import ('../components/Post.vue'),
     },
     {
+        path: '/create',
+        name: 'Create',
+        component: () =>
+            import ('../components/CreatePostItem.vue'),
+    },
+    {
         path: '/account',
         name: 'Account',
         component: () =>
