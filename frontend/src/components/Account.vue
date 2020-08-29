@@ -44,6 +44,7 @@
       <p>Account settings:
         <router-link to="/update/password">Update Password</router-link>
       </p>
+      <p><button class="" v-on:click="signOut">Выйти</button></p>
     </div>
 </template>
 
@@ -64,7 +65,8 @@ export default {
     ...mapActions(['LOGIN_USER']),
 
     async loginUser() {
-      if (this.email.trim() && this.password.trim()) {
+      try{
+        if (this.email.trim() && this.password.trim()) {
         const data = {
           email: this.email,
           password: this.password,
@@ -76,9 +78,20 @@ export default {
         localStorage.setItem('accessToken', result.data.accessToken);
         this.$router.go('');
       } else {
-        console.log('Some error');
+        throw error;
+      }} catch(error) {
+       alert('wrong email + password combination');
+       this.$router.go('');
       }
     },
+    signOut(){
+      try{
+        localStorage.clear();
+        this.$router.go('');
+      }catch(error){
+        alert('request processing error');
+      }
+    }
   },
   computed: {
     authUser() {
