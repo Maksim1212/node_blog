@@ -15,7 +15,7 @@ function findAll() {
  * @exports
  * @method findById
  * @param {string} id
- * @summary get a user
+ * @summary get a post
  * @returns {Promise<UserModel>}
  */
 function findById(id) {
@@ -30,7 +30,7 @@ function findByUserId(author_id) {
  * @exports
  * @method create
  * @param {object} profile
- * @summary create a new user
+ * @summary create a new post
  * @returns {Promise<UserModel>}
  */
 function create(post) {
@@ -38,7 +38,7 @@ function create(post) {
 }
 
 /**
- * Find a user by id and update his profile
+ * Find a post by id and update his data
  * @exports
  * @method updateById
  * @param {string} _id
@@ -54,7 +54,7 @@ function updateById(_id, newProfile) {
  * @exports
  * @method deleteById
  * @param {string} _id
- * @summary delete a user from database
+ * @summary delete a post from database
  * @returns {Promise<void>}
  */
 function deleteById(_id) {

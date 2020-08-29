@@ -4,7 +4,7 @@ import axios from "axios"
 export default {
     state: {
         user: [],
-        name: '',
+        name: [],
     },
     mutations: {
         SET_USER_TO_STATE: (state, user) => {

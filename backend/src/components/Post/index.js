@@ -136,27 +136,14 @@ async function updateById(req, res, next) {
         if (error) {
             throw new ValidationError(error.details);
         }
-
         await PostService.updateById(req.body.id, req.body);
-
         return res.status(200).json({
-            message: 'user updated successfully',
+            message: 'post updated successfully',
         });
     } catch (error) {
-
-        if (error instanceof ValidationError) {
-            req.flash('error', error.message);
-            return res.status(201).json({
-                message: req.flash('error', error.message.data),
-            });
-        }
-        if (error.name === 'MongoError') {
-            return res.status(202).json({
-                message: defaultError,
-            });
-        }
-
-        return next(error);
+        return res.status(422).json({
+            message: error,
+        });
     }
 }
 

@@ -6,6 +6,10 @@ const PostSchema = new Schema({
         type: String,
         required: true,
     },
+    author_name: {
+        type: String,
+        required: true,
+    },
     title: {
         type: String,
         trim: true,

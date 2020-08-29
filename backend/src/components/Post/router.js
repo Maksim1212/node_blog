@@ -48,7 +48,7 @@ postRouter.post('/create', PostComponent.create);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-postRouter.put('/', PostComponent.updateById);
+postRouter.put('/update', PostComponent.updateById);
 
 postRouter.put('/like', PostComponent.addLike);
 /**

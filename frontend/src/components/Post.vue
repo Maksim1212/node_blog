@@ -9,15 +9,15 @@
       </div> -->
       <!-- <div v-else></div> -->
       <h1>{{this.POSTS.title}}</h1>
-      <p>{{this.POSTS.author_id}} | {{getDate}}</p>
+      <p>{{this.POSTS.author_name}} | {{getDate}}</p>
       <br>
       <p>{{this.POSTS.body}}</p>
 </div>
-     <!-- <div class="buttons" v-if="checkUserId">
+     <div class="buttons" v-if="checkUserId">
         <button v-on:click="editItem">Редактировать</button>
-        <button class="delButton" v-on:click="deleteItem">Удалить</button>
-     </div> -->
-     <!-- <div class="buttons" v-else></div> -->
+        <!-- <button class="delButton" v-on:click="deleteItem">Удалить</button> -->
+      </div>
+     <div class="buttons" v-else></div>
   </div>
 </template>
 
@@ -34,16 +34,16 @@ export default {
   methods: {
     ...mapActions(['GET_POST_ITEM_BY_ID_FROM_API']),
     ...mapActions(['FIND_USER']),
-    deleteItem() {
-      const data = {
-        id: this.$route.params.id,
-        token: localStorage.getItem('api_token'),
-      };
-      this.DELETE_POSTS_ITEM_BY_ID_FROM_API(data);
-      this.$router.push('/posts');
-    },
+    // deleteItem() {
+    //   const data = {
+    //     id: this.$route.params.id,
+    //     token: localStorage.getItem('api_token'),
+    //   };
+    //   this.DELETE_POSTS_ITEM_BY_ID_FROM_API(data);
+    //   this.$router.push('/posts');
+    // },
     editItem() {
-      this.$router.push('/posts/' + this.$route.params.id + '/edit');
+      this.$router.push('/post/' + this.$route.params.id + '/edit');
     },
   },
   computed: {
@@ -55,12 +55,12 @@ export default {
       this.FIND_USER(this.posts_data.author_id);
       return this.NAME;
     },
-    // checkUserId() {
-    //   const sessionUserId = localStorage.getItem('sessionUserId');
-    //   if (sessionUserId === this.authorID) {
-    //     return true;
-    //   } return false;
-    // },
+    checkUserId() {
+      const sessionUserId = localStorage.getItem('id');
+      if (sessionUserId === this.POSTS.author_id) {
+        return true;
+      } return false;
+    },
   },
   async mounted() {
     const res = await this.GET_POST_ITEM_BY_ID_FROM_API(this.$route.params.id);
@@ -101,8 +101,8 @@ export default {
     left: 95%;
 }
 .buttons{
-  position: fixed;
-  top: 50%;
+  position: absolute;
+  top: 20%;
 }
 .delButton{
   margin-left: 6px;

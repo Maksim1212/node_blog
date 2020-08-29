@@ -51,16 +51,17 @@ export default {
   },
   methods: {
     ...mapActions(['CREATE_POST_ITEM']),
-    async sendPost() {
+    sendPost() {
       if (this.title.trim() && this.body.trim()) {
         const data = {
           author_id: localStorage.getItem('id'),
+          author_name: localStorage.getItem('name'),
           title: this.title,
           body: this.body,
         };
-        await this.CREATE_POST_ITEM(data);
-        // alert('Ваш пост был успешно добавлен!');
-        // this.$router.push('/');
+        this.CREATE_POST_ITEM(data);
+        alert('Your post has been successfully added!');
+        this.$router.push('/');
       } else {
         console.log('Some error');
       }

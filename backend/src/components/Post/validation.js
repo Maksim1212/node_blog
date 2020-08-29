@@ -40,6 +40,11 @@ class PostValidation extends Validation {
                     .min(15)
                     .max(35)
                     .required(),
+                author_name: this.Joi
+                    .string()
+                    .min(2)
+                    .max(35)
+                    .required(),
                 title: this.Joi
                     .string()
                     .min(1)
@@ -79,7 +84,6 @@ class PostValidation extends Validation {
                     .min(1)
                     .max(10000)
                     .required(),
-                _csrf: this.Joi.string(),
             })
             .validate(data);
     }

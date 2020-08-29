@@ -48,6 +48,7 @@ export default {
                         'title': data.title,
                         'body': data.body,
                         'author_id': data.author_id,
+                        'author_name': data.author_name,
                     }
                 })
                 .then((posts) => {
@@ -59,26 +60,27 @@ export default {
                     return error;
                 })
         },
-        // UPDATE_POST_ITEM_BY_ID_FROM_API(ctx, data) {
-        //     return axios(`http://127.0.0.1:5000/api/v1/posts/${data.id}`, {
-        //             method: "PUT",
-        //             headers: {
-        //                 'x-access-token': data.token,
-        //             },
-        //             data: {
-        //                 'title': data.title,
-        //                 'content': data.content,
-        //             },
-        //         })
-        //         .then((post) => {
-        //             ctx.commit('SET_POSTS_TO_STATE', post.data.feed);
-        //             return post;
-        //         })
-        //         .catch((error) => {
-        //             console.log(error)
-        //             return error;
-        //         })
-        // },
+        UPDATE_POST_ITEM_BY_ID_FROM_API(ctx, data) {
+            return axios('http://127.0.0.1:3000/posts/update', {
+                    method: "PUT",
+                    // headers: {
+                    //     'x-access-token': data.token,
+                    // },
+                    data: {
+                        'title': data.title,
+                        'body': data.body,
+                        'id': data.id,
+                    },
+                })
+                .then((post) => {
+                    ctx.commit('SET_POSTS_TO_STATE', post.data);
+                    return post;
+                })
+                .catch((error) => {
+                    console.log(error)
+                    return error;
+                })
+        },
     },
     getters: {
         POSTS(state) {

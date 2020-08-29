@@ -17,6 +17,13 @@ const routes = [{
             import ('../components/Post.vue'),
     },
     {
+        path: '/post/:id/edit',
+        name: 'Edit',
+        component: () =>
+            import ('../components/EditPostItem.vue')
+
+    },
+    {
         path: '/create',
         name: 'Create',
         component: () =>

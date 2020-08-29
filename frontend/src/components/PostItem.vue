@@ -8,7 +8,8 @@
       </div> -->
       <!-- <div class="icons" v-else></div> -->
       <div>
-          <p class="dataInfo"> <router-link :to="{name: 'Read', params: {id: posts_data._id}}">
+          <p class="dataInfo"> <router-link :to="{name: 'Read',
+          params: {id: posts_data.author_id}}">
              {{getName}}
           </router-link> | {{getDate}}</p>
       <p>{{getContent}}
@@ -16,13 +17,13 @@
               ...
           </router-link>
       </p>
+      <p>{{getLikesCount}} likes</p>
       </div>
   </div>
 </template>
 
 <script>
 /* eslint-disable */
-import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'PostItem',
@@ -35,23 +36,12 @@ export default {
     posts_data: {
       type: Object,
       default() {
-        return {
-        };
+        return {};
       },
     },
   },
-  methods: {
-    ...mapActions(['GET_POSTS_FROM_API']),
-    ...mapActions(['FIND_USER']),
-    // async getUser() {
-    //  const result = await this.FIND_USER('5f48026b514f0971d14bdbbe');
-    //  console.log(result.name);
-    //  return result.name;
-    // },
-
-  },
+  methods: {},
   computed: {
-    ...mapGetters(['NAME']),
     getDate() {
       return this.posts_data.creation_time.split('T')[0];
     },
@@ -59,8 +49,10 @@ export default {
       return this.posts_data.body.substring(0, 70);
     },
     getName(){
-      this.FIND_USER(this.posts_data.author_id);
-      return this.NAME;
+      return this.posts_data.author_name;
+    },
+    getLikesCount(){
+      return this.posts_data.likes.length;
     },
     checkUserId() {
       // let sessionUserId = localStorage.getItem('sessionUserId');
@@ -72,10 +64,7 @@ export default {
     },
   },
 
-  mounted() {
-    // this.FIND_USER('5f48026b514f0971d14bdbbe');
-    // localStorage.getItem('author');
-  },
+  mounted() {},
 };
 </script>
 
