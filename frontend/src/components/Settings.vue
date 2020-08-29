@@ -82,7 +82,6 @@ export default {
       } else {
         throw error;
       }}catch(error){
-        console.log(error);
        alert('wrong email + password combination');
       }
     },

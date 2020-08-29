@@ -1,53 +1,70 @@
 <template>
 <div>
 <div class="post">
-    <!-- <div class="icons" v-if="checkUserId">
-          <img class="postsActions" src="../assets/clear.svg" v-on:click="deleteItem">
-     <router-link :to="{name: 'Edit', params: {}}">
-  <img class="edit" src="../assets/pencil.svg">
-      </router-link>
-      </div> -->
-      <!-- <div v-else></div> -->
       <h1>{{this.POSTS.title}}</h1>
       <p>{{this.POSTS.author_name}} | {{getDate}}</p>
       <br>
       <p>{{this.POSTS.body}}</p>
 </div>
      <div class="buttons" v-if="checkUserId">
-        <button v-on:click="editItem">Редактировать</button>
-        <!-- <button class="delButton" v-on:click="deleteItem">Удалить</button> -->
+        <button v-on:click="editItem">Edit</button>
       </div>
      <div class="buttons" v-else></div>
+     <div class="likes">
+       <p> {{getLikesCount}} likes</p>
+       <button v-on:click="addLike">like</button>
+     </div>
+     <br><br><br>
+     <div>
+       <button v-on:click="addComment">ADD Commnet</button>
+     </div>
+      <div>
+        <CommentItem
+        v-for="comment in COMMENTS"
+        :key="(Object.assign({}, ...comment))._id"
+        :comments_data="comment"
+    />
+  </div>
   </div>
 </template>
 
 <script>
 /* eslint-disable */
+import axios from 'axios';
 import { mapActions, mapGetters } from 'vuex';
+import CommentItem from './CommentItem';
+
 export default {
   name: 'Post',
   data() {
     return {
-      authorID: '',
+      likes: 0,
     };
   },
   methods: {
-    ...mapActions(['GET_POST_ITEM_BY_ID_FROM_API']),
-    ...mapActions(['FIND_USER']),
-    // deleteItem() {
-    //   const data = {
-    //     id: this.$route.params.id,
-    //     token: localStorage.getItem('api_token'),
-    //   };
-    //   this.DELETE_POSTS_ITEM_BY_ID_FROM_API(data);
-    //   this.$router.push('/posts');
-    // },
+    ...mapActions(['GET_POST_ITEM_BY_ID_FROM_API',
+    'ADD_LIKE_FOR_POST_ITEM', 'FIND_USER', 'GET_COMMENT_ITEMS_BY_ID_FROM_API']),
     editItem() {
       this.$router.push('/post/' + this.$route.params.id + '/edit');
     },
+    async addLike() {
+      try {
+        const data = {
+        post_id: this.POSTS._id,
+        user_id: localStorage.getItem('id'),
+        }
+      await this.ADD_LIKE_FOR_POST_ITEM(data);
+      await this.GET_POST_ITEM_BY_ID_FROM_API(this.$route.params.id);
+      } catch(error) {
+         alert('you have already liked this post');
+      }
+    },
+    addComment() {
+      this.$router.push('/post/' + this.$route.params.id + '/comment');
+    }
   },
   computed: {
-    ...mapGetters(['POSTS']),
+    ...mapGetters(['POSTS', 'COMMENTS']),
     getDate() {
       return this.POSTS.creation_time.split('T')[0];
     },
@@ -61,14 +78,17 @@ export default {
         return true;
       } return false;
     },
+    getLikesCount(){
+      return this.POSTS.likes.length;
+    },
   },
   async mounted() {
-    const res = await this.GET_POST_ITEM_BY_ID_FROM_API(this.$route.params.id);
-    console.log(res);
+    await this.GET_POST_ITEM_BY_ID_FROM_API(this.$route.params.id);
+    await this.GET_COMMENT_ITEMS_BY_ID_FROM_API(this.$route.params.id);
    // this.authorID = res.data.creator._id;
   },
-  components: {
-
+   components: {
+    CommentItem,
   },
 };
 </script>
@@ -104,7 +124,9 @@ export default {
   position: absolute;
   top: 20%;
 }
-.delButton{
-  margin-left: 6px;
+.likes{
+  position: fixed;
+  top: 14%;
+  left: 90%;
 }
 </style>

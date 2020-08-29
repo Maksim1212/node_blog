@@ -81,6 +81,26 @@ export default {
                     return error;
                 })
         },
+        ADD_LIKE_FOR_POST_ITEM(ctx, data) {
+            return axios('http://127.0.0.1:3000/posts/like', {
+                    method: "PUT",
+                    // headers: {
+                    //     'x-access-token': data.token,
+                    // },
+                    data: {
+                        'post_id': data.post_id,
+                        'user_id': data.user_id,
+                    }
+                })
+                .then((posts) => {
+                    ctx.commit('SET_POSTS_TO_STATE', posts.data);
+
+                })
+                .catch((error) => {
+                    console.log(error)
+                    return error;
+                })
+        },
     },
     getters: {
         POSTS(state) {

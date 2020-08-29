@@ -195,24 +195,17 @@ async function addLike(req, res, next) {
         let like = likesArr.find(id => id === `${req.body.user_id}`);
         if (like === undefined) {
             await PostService.addLike(req.body.post_id, req.body.user_id);
+            const data = await PostService.findById(req.body.post_id);
             return res.status(200).json({
-                message: 'like added successfully'
+                data,
             });
-        }
-        return res.status(200).json({
-            message: 'you have already liked this post'
+        } else return res.status(422).json({
+            dad: 'you have already liked this post'
         })
     } catch (error) {
-        if (error instanceof ValidationError) {
-            return res.status(422).json({
-                message: error.name,
-            });
-        }
-        res.status(500).json({
-            message: error.name,
+        return res.status(422).json({
+            message: error,
         });
-
-        return next(error);
     }
 }
 

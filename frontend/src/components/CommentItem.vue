@@ -1,23 +1,13 @@
 <template>
-  <div class="PostItem">
-      <h3>{{posts_data.title}}</h3>
-      <div class="icons" v-if="checkUserId">
-     <router-link :to="{name: 'Edit', params: {id: posts_data._id}}">
-          <img class="edit" src="../assets/pencil.svg">
-      </router-link>
-      </div>
-       <div class="icons" v-else></div>
+  <div class="CommentItem">
       <div>
-          <p class="dataInfo"> <router-link :to="{name: 'Read',
-          params: {id: posts_data.author_id}}">
-             {{getName}}
-          </router-link> | {{getDate}}</p>
+          <p class="dataInfo">
+              {{getDate}}</p>
       <p>{{getContent}}
-           <router-link :to="{name: 'Read', params: {id: posts_data._id}}">
-              ...
-          </router-link>
+
       </p>
       <p>{{getLikesCount}} likes</p>
+      <button v-on:click="addLike">like</button>
       </div>
   </div>
 </template>
@@ -26,33 +16,50 @@
 /* eslint-disable */
 
 export default {
-  name: 'PostItem',
+  name: 'CommentItem',
   data() {
     return {
       // googleId:Number,
     };
   },
   props: {
-    posts_data: {
+    comments_data: {
       type: Object,
       default() {
         return {};
       },
     },
   },
-  methods: {},
+  methods: {
+    async addLike() {
+      try {
+        const data = {
+        comment_id: this.comments_data._id,
+        user_id: localStorage.getItem('id'),
+        }
+      await this.ADD_LIKE_FOR_POST_ITEM(data);
+      // await this.GET_POST_ITEM_BY_ID_FROM_API(this.$route.params.id);
+      // this.$route.go();
+      } catch(error) {
+         alert('you have already liked this post');
+      }
+    },
+    addComment() {
+      this.$router.push('/post/' + this.$route.params.id + '/comment');
+    }
+  },
   computed: {
     getDate() {
-      return this.posts_data.creation_time.split('T')[0];
+      return this.comments_data.creation_time.split('T')[0];
     },
     getContent() {
-      return this.posts_data.body.substring(0, 70);
+      return this.comments_data.body;
     },
-    getName(){
-      return this.posts_data.author_name;
-    },
+    // getName(){
+    //   return this.posts_data.author_name;
+    // },
     getLikesCount(){
-      return this.posts_data.likes.length;
+      return this.comments_data.likes.length;
     },
     checkUserId() {
       let sessionUserId = localStorage.getItem('id');
@@ -68,7 +75,7 @@ export default {
 </script>
 
 <style scoped>
-.PostItem {
+.CommentItem {
     outline: 1px solid #000;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;

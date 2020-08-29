@@ -47,6 +47,13 @@ const routes = [{
         component: () =>
             import ('../components/Settings.vue'),
     },
+    {
+        path: '/post/:id/comment',
+        name: 'Comment',
+        component: () =>
+            import ('../components/CreateComment.vue')
+
+    },
 ];
 
 const router = new VueRouter({
