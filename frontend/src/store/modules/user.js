@@ -32,6 +32,24 @@ export default {
                     return error;
                 })
         },
+        REGISTER_USER(ctx, data) {
+            return axios('http://127.0.0.1:3000/v1/auth/createUser', {
+                    method: "POST",
+                    data: {
+                        'email': data.email,
+                        'password': data.password,
+                        'name': data.name,
+                    },
+                })
+                .then((user) => {
+                    ctx.commit('SET_USER_TO_STATE', user);
+                    return user.data;
+                })
+                .catch((error) => {
+                    console.log(error)
+                    return error;
+                })
+        },
         FIND_USER(ctx, id) {
             return axios(`http://127.0.0.1:3000/v1/auth/user/${id}`, {
                     method: "GET",

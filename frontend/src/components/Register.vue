@@ -5,6 +5,20 @@
             <form @submit.prevent="loginUser">
             <div class="">
               <br>
+              <div class="">
+                <input
+
+                        type="text"
+                        class=""
+                        autocomplete="off"
+                        v-model="name"
+                        :class="{'is-invalid' : $v.name.$error}"
+                >
+                <small
+                        v-if="!$v.name.required"
+                        class="">Enter name
+                </small>
+            </div><br>
                  <small
                         v-if="!$v.email.required"
                         class="">Enter login
@@ -33,12 +47,9 @@
             <br>
             <button type="submit"
                     class=""
-                    :disabled="$v.$invalid">Login</button>
+                    :disabled="$v.$invalid">Register</button>
         </form>
         </div>
-       <p>
-         if you don't have account ,  <router-link to="/register">Register</router-link>
-       </p>
     </div>
 </template>
 
@@ -52,24 +63,23 @@ export default {
     return {
       email: '',
       password: '',
+      name: '',
       isButtonDisable: true,
     };
   },
   methods: {
-    ...mapActions(['LOGIN_USER']),
+    ...mapActions(['REGISTER_USER']),
 
     async loginUser() {
-      if (this.email.trim() && this.password.trim()) {
+      if (this.email.trim() && this.password.trim() && this.name.trim()) {
         const data = {
+          name: this.name,
           email: this.email,
           password: this.password,
         };
-        const result = await this.LOGIN_USER(data);
+        const result = await this.REGISTER_USER(data);
         console.log(result);
-        localStorage.setItem('name', result.data.name);
-        localStorage.setItem('id', result.data._id);
-        localStorage.setItem('accessToken', result.data.accessToken);
-        this.$router.push('/');
+        this.$router.push('/account');
       } else {
         console.log('Some error');
       }
@@ -82,6 +92,9 @@ export default {
       required,
     },
     password: {
+      required,
+    },
+    name: {
       required,
     },
   },
