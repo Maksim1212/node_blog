@@ -15,32 +15,6 @@ const connectOptions = {
 
 module.exports = mongoose.createConnection(MONGO_URI, connectOptions);
 
-// const User = require('../components/Auth/model');
-
-// const users = [
-//     new User({
-//         name: 'User1',
-//         email: 'testuser232@gmail.com',
-//         password: 'dwdwdwd2312314234',
-//         refreshToken: 'refreshTokenrefreshTokenrefreshToken'
-//     }),
-//     new User({
-//         name: 'User2',
-//         email: 'awdaw2d@gmail.com',
-//         password: 'dwdwdwd22312314234',
-//         refreshToken: 'refreshToknrefreshTokenrefreshToken'
-//     }),
-// ];
-// let done = 0;
-// for (let i = 0; i < users.length; i++) {
-//     users[i].save(function(err, result) {
-//         done++;
-//         if (done === users.length) {
-//             exit();
-//         }
-//     });
-// }
-
 const Post = require('../components/Post/model');
 
 const posts = [
