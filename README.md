@@ -1,5 +1,5 @@
 
-### Чек-лист решения
+### Solution checklist
 
 - [x] User registration (email, name, password)
 - [x] User login
