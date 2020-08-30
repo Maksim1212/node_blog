@@ -44,7 +44,7 @@
       <p>Account settings:
         <router-link to="/update/password">Update Password</router-link>
       </p>
-      <p><button class="" v-on:click="signOut">Выйти</button></p>
+      <p><button class="" v-on:click="signOut">signOut</button></p>
     </div>
 </template>
 

@@ -48,7 +48,7 @@ export default {
         };
         this.CREATE_COMMENT_ITEM(data);
         alert('Your comment has been successfully added!');
-        this.$router.go('/post/' + this.$route.params.id);
+        this.$router.push('/post/' + this.$route.params.id);
       }catch(error){
        alert(error);
      }

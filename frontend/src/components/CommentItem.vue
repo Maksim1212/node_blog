@@ -14,6 +14,7 @@
 
 <script>
 /* eslint-disable */
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'CommentItem',
@@ -31,17 +32,20 @@ export default {
     },
   },
   methods: {
+    ...mapActions([
+    'ADD_LIKE_FOR_COMMENT_ITEM', 'GET_COMMENT_ITEMS_BY_ID_FROM_API']),
     async addLike() {
       try {
         const data = {
         comment_id: this.comments_data._id,
         user_id: localStorage.getItem('id'),
         }
-      await this.ADD_LIKE_FOR_POST_ITEM(data);
-      // await this.GET_POST_ITEM_BY_ID_FROM_API(this.$route.params.id);
-      // this.$route.go();
+        console.log(this.comments_data._id)
+      await this.ADD_LIKE_FOR_COMMENT_ITEM(data);
+      await this.GET_COMMENT_ITEMS_BY_ID_FROM_API(this.$route.params.id);
+      alert('you have successfully rated this comment');
       } catch(error) {
-         alert('you have already liked this post');
+         alert('you have already liked this comment');
       }
     },
     addComment() {
