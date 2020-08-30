@@ -68,11 +68,13 @@ async function findByUserId(req, res, next) {
         }
 
         const posts = await PostService.findByUserId(req.params.id);
+        console.log('by user Id_______________');
         console.log(posts);
         return res.status(200).json({
             data: posts
         });
     } catch (error) {
+        console.log('eeerrrrrpppprrrr');
         return res.status(422).json({
             error: error.name,
             details: error.message,

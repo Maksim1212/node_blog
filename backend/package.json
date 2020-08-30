@@ -1,9 +1,10 @@
 {
     "name": "blog",
     "version": "0.0.1",
-    "main": ".backend/src/server/index.js",
+    "main": "./src/server/index.js",
     "scripts": {
-        "start": "node backend/src/server/index.js"
+        "seed": "node ./src/seed/seeder.js",
+        "start": "node ./src/server/index.js"
     },
     "dependencies": {
         "@hapi/joi": "17.1.0",
