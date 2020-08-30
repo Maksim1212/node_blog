@@ -54,14 +54,12 @@ export default {
         CREATE_POST_ITEM(ctx, data) {
             return axios('http://127.0.0.1:3000/posts/create', {
                     method: "POST",
-                    // headers: {
-                    //     'x-access-token': data.token,
-                    // },
                     data: {
                         'title': data.title,
                         'body': data.body,
                         'author_id': data.author_id,
                         'author_name': data.author_name,
+                        'accessToken': data.accessToken,
                     }
                 })
                 .then((posts) => {
@@ -76,13 +74,12 @@ export default {
         UPDATE_POST_ITEM_BY_ID_FROM_API(ctx, data) {
             return axios('http://127.0.0.1:3000/posts/update', {
                     method: "PUT",
-                    // headers: {
-                    //     'x-access-token': data.token,
-                    // },
                     data: {
                         'title': data.title,
                         'body': data.body,
                         'id': data.id,
+                        'accessToken': data.accessToken,
+                        'author_id': data.author_id,
                     },
                 })
                 .then((post) => {
@@ -97,9 +94,6 @@ export default {
         ADD_LIKE_FOR_POST_ITEM(ctx, data) {
             return axios('http://127.0.0.1:3000/posts/like', {
                     method: "PUT",
-                    // headers: {
-                    //     'x-access-token': data.token,
-                    // },
                     data: {
                         'post_id': data.post_id,
                         'user_id': data.user_id,

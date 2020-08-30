@@ -18,50 +18,13 @@ async function findAll(req, res, next) {
     }
 }
 
-// async function findById(req, res, next) {
-//     try {
-//         const { error } = PostValidation.findById(req.params);
-
-//         if (error) {
-//             throw new ValidationError(error.details);
-//         }
-//         console.log(req.params.id)
-
-//         const post = await PostService.findById(req.params.id);
-//         console.log(post)
-//         return res.status(200).json({
-//             post
-//         });
-//         // render('post.html', {
-//         //     errors: req.flash('error'),
-//         //)};
-//     } catch (error) {
-//         if (error instanceof ValidationError) {
-//             return res.status(422).json({
-//                 error: error.name,
-//                 details: error.message,
-//             });
-//         }
-
-//         res.status(500).json({
-//             message: error.name,
-//             details: error.message,
-//         });
-
-//         return next(error);
-//     }
-// }
-
 async function create(req, res, next) {
     try {
         const { error } = CommentValidation.create(req.body);
-
         if (error) {
             throw new ValidationError(error.details);
         }
-
         await CommentService.create(req.body);
-        console.log(req.body);
         return res.status(200).json({
             message: 'comment added successfully',
         });
@@ -137,7 +100,6 @@ async function addLike(req, res, next) {
 }
 module.exports = {
     findAll,
-    // findById,
     create,
     findByPostId,
     addLike,

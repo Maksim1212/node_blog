@@ -6,11 +6,7 @@ const Validation = require('../validation');
  * @extends Validation
  */
 class PostValidation extends Validation {
-    /**
-     * @param {String} data.id - objectId
-     * @returns
-     * @memberof UserValidation
-     */
+
     findById(data) {
         return this.Joi
             .object({
@@ -26,12 +22,6 @@ class PostValidation extends Validation {
             .validate(data);
     }
 
-    /**
-     * @param {String} profile.email
-     * @param {String} profile.fullName
-     * @returns
-     * @memberof UserValidation
-     */
     create(post) {
         return this.Joi
             .object({
@@ -39,6 +29,11 @@ class PostValidation extends Validation {
                     .string()
                     .min(15)
                     .max(35)
+                    .required(),
+                accessToken: this.Joi
+                    .string()
+                    .min(40)
+                    .max(200)
                     .required(),
                 author_name: this.Joi
                     .string()
@@ -55,7 +50,6 @@ class PostValidation extends Validation {
                     .min(1)
                     .max(10000)
                     .required(),
-                _csrf: this.Joi.string(),
                 comment: this.Joi
                     .string()
                     .min(1)
@@ -64,16 +58,12 @@ class PostValidation extends Validation {
             .validate(post);
     }
 
-    /**
-     * @param {String} data.id - objectId
-     * @param {String} data.fullName
-     * @returns
-     * @memberof UserValidation
-     */
     updateById(data) {
         return this.Joi
             .object({
                 id: this.Joi.objectId(),
+                accessToken: this.Joi.string().min(40).max(200).required(),
+                author_id: this.Joi.string().min(12).max(40),
                 title: this.Joi
                     .string()
                     .min(1)
@@ -105,11 +95,6 @@ class PostValidation extends Validation {
             .validate(data);
     }
 
-    /**
-     * @param {String} data.id - objectId
-     * @returns
-     * @memberof PostValidation
-     */
     deleteById(data) {
         return this.Joi
             .object({

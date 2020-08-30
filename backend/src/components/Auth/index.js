@@ -13,8 +13,8 @@ const wrongPassword = 'Wrong Password';
 const saltRounds = 10;
 
 async function getJWTTokens(user) {
-    const accessToken = jwt.sign({ user }, process.env.JWT_Access_Secret_KEY, { expiresIn: 5 });
-    const refreshToken = jwt.sign({}, process.env.JWT_Refresh_Secret_KEY, { expiresIn: '2d' });
+    const accessToken = jwt.sign({ user }, process.env.JWT_Access_Secret_KEY, { expiresIn: 500 });
+    const refreshToken = jwt.sign({}, process.env.JWT_Refresh_Secret_KEY, { expiresIn: '15d' });
 
     await AuthUserService.updateRefreshToken(user, refreshToken);
     return {
@@ -39,7 +39,6 @@ async function createUser(req, res, next) {
 
         req.body.password = await bcrypt.hash(req.body.password, saltRounds);
         let user = await AuthUserService.createUser(req.body);
-        console.log('user data = ', user);
         return res.status(200).json({
             user
         });
@@ -67,7 +66,6 @@ async function updateUserPass(req, res, next) {
             throw new ValidationError(error.details);
         }
         const updatingUser = await AuthUserService.findUser(req.body.email);
-        console.log('updatingUser', updatingUser);
         if (!updatingUser) {
             req.flash('error', { message: userNotFound });
 
@@ -100,14 +98,11 @@ async function updateUserPass(req, res, next) {
 
 async function getUserFromID(req, res, next) {
     try {
-        console.log(req.params.id)
         const { error } = AuthUserValidation.findById(req.params);
 
         if (error) {
             throw new ValidationError(error.details);
         }
-        console.log(req.params.id)
-
         const user = await AuthUserService.getUserFromID(req.params.id);
         const name = user.name;
         return res.status(200).json({

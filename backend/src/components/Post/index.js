@@ -33,25 +33,28 @@ async function sort(req, res, next) {
         });
     }
 }
-/**
- * @function
- * @param {express.Request} req
- * @param {express.Response} res
- * @param {express.NextFunction} next
- * @returns {Promise < void >}
- */
+async function sortByLikes(req, res, next) {
+    try {
+        const param = Number(req.body.param);
+        const posts = await PostService.sortByLikes();
+        return res.status(200).json(
+            posts,
+        );
+    } catch (error) {
+        return res.status(422).json({
+            error: error.name,
+            details: error.message,
+        });
+    }
+}
+
 async function findById(req, res, next) {
     try {
-        console.log(req.params.id)
         const { error } = PostValidation.findById(req.params);
-
         if (error) {
             throw new ValidationError(error.details);
         }
-        console.log(req.params.id)
-
         const post = await PostService.findById(req.params.id);
-        console.log(post)
         return res.status(200).json({
             post
         });
@@ -82,13 +85,10 @@ async function findByUserId(req, res, next) {
         }
 
         const posts = await PostService.findByUserId(req.params.id);
-        console.log('by user Id_______________');
-        console.log(posts);
         return res.status(200).json({
             data: posts
         });
     } catch (error) {
-        console.log('eeerrrrrpppprrrr');
         return res.status(422).json({
             error: error.name,
             details: error.message,
@@ -96,13 +96,6 @@ async function findByUserId(req, res, next) {
     }
 }
 
-/**
- * @function
- * @param {express.Request} req
- * @param {express.Response} res
- * @param {express.NextFunction} next
- * @returns {Promise < void >}
- */
 async function create(req, res, next) {
     try {
         const { error } = PostValidation.create(req.body);
@@ -112,7 +105,6 @@ async function create(req, res, next) {
         }
 
         await PostService.create(req.body);
-        console.log(req.body);
         return res.status(200).json({
             message: 'post added successfully',
         });
@@ -131,13 +123,6 @@ async function create(req, res, next) {
     }
 }
 
-/**
- * @function
- * @param {express.Request} req
- * @param {express.Response} res
- * @param {express.NextFunction} next
- * @returns {Promise<void>}
- */
 async function updateById(req, res, next) {
     try {
         const { error } = PostValidation.updateById(req.body);
@@ -156,13 +141,6 @@ async function updateById(req, res, next) {
     }
 }
 
-/**
- * @function
- * @param {express.Request} req
- * @param {express.Response} res
- * @param {express.NextFunction} next
- * @returns {Promise<void>}
- */
 async function deleteById(req, res, next) {
     try {
         const { error } = PostValidation.deleteById(req.body);
@@ -175,19 +153,9 @@ async function deleteById(req, res, next) {
             message: 'user deleted successfully',
         });
     } catch (error) {
-        if (error instanceof ValidationError) {
-            req.flash('error', error.message);
-            return res.status(201).json({
-                message: req.flash('error', error.message.data),
-            });
-        }
-        if (error.name === 'MongoError') {
-            console.log(req.flash('error', { message: defaultError }));
-            return res.status(202).json({
-                message: defaultError,
-            });
-        }
-        return next(error);
+        return res.status(442).json({
+            message: error,
+        });
     }
 }
 
@@ -227,4 +195,5 @@ module.exports = {
     findByUserId,
     addLike,
     sort,
+    sortByLikes,
 };

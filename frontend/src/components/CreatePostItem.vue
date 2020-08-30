@@ -56,6 +56,7 @@ export default {
         const data = {
           author_id: localStorage.getItem('id'),
           author_name: localStorage.getItem('name'),
+          accessToken: localStorage.getItem('accessToken'),
           title: this.title,
           body: this.body,
         };

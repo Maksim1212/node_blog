@@ -53,7 +53,8 @@ export default {
         title: this.title,
         body: this.body,
         id: this.$route.params.id,
-        // token: localStorage.getItem('api_token'),
+        accessToken: localStorage.getItem('accessToken'),
+        author_id: localStorage.getItem('id'),
       };
       this.UPDATE_POST_ITEM_BY_ID_FROM_API(postData);
       this.$router.push('/post/' + this.$route.params.id);
