@@ -18,7 +18,7 @@ const postRouter = Router();
  * @param {callback} middleware - Express middleware.
  */
 postRouter.get('/', PostComponent.findAll);
-
+postRouter.post('/sort', PostComponent.sort);
 /**
  * Route serving a user
  * @name /v1/users/:id

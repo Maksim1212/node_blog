@@ -19,6 +19,20 @@ async function findAll(req, res, next) {
     }
 }
 
+async function sort(req, res, next) {
+    try {
+        const param = Number(req.body.param);
+        const posts = await PostService.sort(param);
+        return res.status(200).json(
+            posts,
+        );
+    } catch (error) {
+        return res.status(422).json({
+            error: error.name,
+            details: error.message,
+        });
+    }
+}
 /**
  * @function
  * @param {express.Request} req
@@ -212,4 +226,5 @@ module.exports = {
     deleteById,
     findByUserId,
     addLike,
+    sort,
 };

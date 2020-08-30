@@ -114,6 +114,22 @@ export default {
                     return error;
                 })
         },
+        SORT_POSTS(ctx, data) {
+            return axios('http://127.0.0.1:3000/posts/sort', {
+                    method: "POST",
+                    data: {
+                        'param': data.param,
+                    }
+                })
+                .then((posts) => {
+                    ctx.commit('SET_POSTS_TO_STATE', posts.data);
+
+                })
+                .catch((error) => {
+                    console.log(error)
+                    return error;
+                })
+        },
     },
     getters: {
         POSTS(state) {

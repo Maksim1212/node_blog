@@ -11,6 +11,14 @@ function findAll() {
     return PostModel.find({}).exec();
 }
 
+function sort(param) {
+    return PostModel.aggregate([{
+        $sort: {
+            creation_time: param,
+        }
+    }, ]);
+}
+
 /**
  * @exports
  * @method findById
@@ -73,4 +81,5 @@ module.exports = {
     deleteById,
     findByUserId,
     addLike,
+    sort,
 };

@@ -6,6 +6,8 @@
       </div>
       <div v-else>
       </div>
+      <button class="" v-on:click="lastPosts">last posts</button>
+      <button class="" v-on:click="oldPosts">old posts</button>
   </div>
     <!-- <p>
       For a guide and recipes on how to configure / customize this project,<br>
@@ -34,7 +36,19 @@ export default {
     msg: String,
   },
   methods: {
-    ...mapActions(['GET_POSTS_FROM_API']),
+    ...mapActions(['GET_POSTS_FROM_API', 'SORT_POSTS']),
+    lastPosts(){
+      let data = {
+        param: -1,
+      };
+      return this.SORT_POSTS(data);
+    },
+    oldPosts(){
+      let data = {
+        param: 1,
+      };
+      return this.SORT_POSTS(data);
+    }
   },
   computed: {
     ...mapGetters(['POSTS']),
