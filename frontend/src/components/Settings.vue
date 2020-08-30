@@ -75,8 +75,12 @@ export default {
           email: this.email,
           password: this.password,
         };
-        const result = await axios.post('http://127.0.0.1:3000/v1/auth/update', {
-        email: `${this.email}`, password: `${this.password}`,newPassword: `${this.newPassword}`});
+        const result = await axios.put('http://127.0.0.1:3000/v1/auth/update', {
+        email: `${this.email}`, password: `${this.password}`,
+        newPassword: `${this.newPassword}`,
+        accessToken: `${localStorage.getItem('accessToken')}`,
+        author_id: `${localStorage.getItem('id')}`
+        });
         localStorage.clear();
         this.$router.push('/account');
       } else {

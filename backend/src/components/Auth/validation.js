@@ -38,6 +38,15 @@ class AuthUserValidation extends Validation {
                     .min(5)
                     .max(18)
                     .required(),
+                author_id: this.Joi
+                    .string()
+                    .min(15)
+                    .max(35),
+                accessToken: this.Joi
+                    .string()
+                    .min(40)
+                    .max(200)
+                    .required(),
                 email: this.Joi.string().email().required(),
             })
             .validate(data);

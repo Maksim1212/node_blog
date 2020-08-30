@@ -8,15 +8,11 @@ authUserRouter.post('/login', AuthUserComponent.login);
 
 authUserRouter.get('/logout', AuthUserComponent.logout);
 
-authUserRouter.get('/401', AuthUserComponent.anauthorized);
-
-authUserRouter.get('/403', AuthUserComponent.forbidden);
-
 authUserRouter.post('/createUser', AuthUserComponent.createUser);
 
 authUserRouter.post('/updateToken', Auth.isAuthJWT);
 
-authUserRouter.post('/update', AuthUserComponent.updateUserPass);
+authUserRouter.put('/update', Auth.isAuthJWT, AuthUserComponent.updateUserPass);
 
 authUserRouter.get('/user/:id', AuthUserComponent.getUserFromID);
 

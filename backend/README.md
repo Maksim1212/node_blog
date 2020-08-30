@@ -1,31 +1,53 @@
-** Simple Node js + Vue js APP **
-
 ## Components
 
 1)Auth
 
-2)User
+2)Posts
 
-3)Posts
-
-4)Comments
+3)Comments
 
 ## Routes
+# Auth
+POST http://localhost:3000/v1/auth/createUser
 
-http://localhost:3000/v1/auth/login --GET (csrf && JWT)
+POST http://localhost:3000/v1/auth/login
 
-http://localhost:3000/v1/auth/register --GET (GET (csrf && JWT))
+PUT http://localhost:3000/v1/auth/update
 
-http://localhost:3000/v1/auth/401/ --GET
+GET http://localhost:3000/v1/auth/user/:id 
 
-http://localhost:3000/v1/auth/404/ --GET
+# Comment
+GET http://localhost:3000/comments
 
-http://localhost:3000/v1/users/ --GET
+POST http://localhost:3000/comments/create
+
+PUT http://localhost:3000/comments/like
+
+GET http://localhost:3000/comments/:id 
+
+# Post
+GET http://localhost:3000/posts
+
+GET http://localhost:3000/posts/:id
+
+GET http://localhost:3000/posts/:id
+
+POST http://localhost:3000/posts/create
+
+POST http://localhost:3000/posts/sort
+
+PUT http://localhost:3000/posts/update
+
+PUT http://localhost:3000/posts/like
 
 ## Installation
 
 ```bash
 $ npm install
+```
+## Running the seeds
+```bash
+$ npm run seed
 ```
 ## Running the app
 ```bash
