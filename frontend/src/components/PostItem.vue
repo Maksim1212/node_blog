@@ -8,7 +8,7 @@
       </div>
        <div class="icons" v-else></div>
       <div>
-          <p class="dataInfo"> <router-link :to="{name: 'Read',
+          <p class="dataInfo"> <router-link :to="{name: 'Group',
           params: {id: posts_data.author_id}}">
              {{getName}}
           </router-link> | {{getDate}}</p>

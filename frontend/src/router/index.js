@@ -30,6 +30,13 @@ const routes = [{
             import ('../components/CreatePostItem.vue'),
     },
     {
+        path: '/posts/:id',
+        name: 'Group',
+        component: () =>
+            import ('../components/GroupPosts.vue')
+
+    },
+    {
         path: '/account',
         name: 'Account',
         component: () =>

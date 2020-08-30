@@ -37,6 +37,19 @@ export default {
                     return error;
                 })
         },
+        GET_POSTS_BY_USER_ID(ctx, id) {
+            return axios(`http://127.0.0.1:3000/posts/user/${id}`, {
+                    method: "GET",
+                })
+                .then((posts) => {
+                    ctx.commit('SET_POSTS_TO_STATE', posts.data.data);
+                    return posts;
+                })
+                .catch((error) => {
+                    console.log(error)
+                    return error;
+                })
+        },
 
         CREATE_POST_ITEM(ctx, data) {
             return axios('http://127.0.0.1:3000/posts/create', {

@@ -12,9 +12,10 @@ async function findAll(req, res, next) {
             posts,
         );
     } catch (error) {
-        req.flash('error', { message: defaultError });
-
-        return next(error);
+        return res.status(422).json({
+            error: error.name,
+            details: error.message,
+        });
     }
 }
 
@@ -59,6 +60,7 @@ async function findById(req, res, next) {
 
 async function findByUserId(req, res, next) {
     try {
+
         const { error } = PostValidation.findByUserId(req.params);
 
         if (error) {
@@ -66,24 +68,15 @@ async function findByUserId(req, res, next) {
         }
 
         const posts = await PostService.findByUserId(req.params.id);
-
+        console.log(posts);
         return res.status(200).json({
-            posts
+            data: posts
         });
     } catch (error) {
-        if (error instanceof ValidationError) {
-            return res.status(422).json({
-                error: error.name,
-                details: error.message,
-            });
-        }
-
-        res.status(500).json({
-            message: error.name,
+        return res.status(422).json({
+            error: error.name,
             details: error.message,
         });
-
-        return next(error);
     }
 }
 
